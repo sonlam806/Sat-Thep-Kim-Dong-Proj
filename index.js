@@ -19,6 +19,6 @@ app.get('/test', (req, res) => res.render('test'));
 // Xử lý dữ liệu gửi lên từ người dùng
 io.on("connection", function (socket) {
     socket.emit('news', {
-        hello: "hello world"
+        hello: "hEllo world"
     });
 })
