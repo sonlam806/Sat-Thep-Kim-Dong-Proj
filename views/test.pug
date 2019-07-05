@@ -1,0 +1,14 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title Document
+    script(src='/socket.io/socket.io.js')
+    script.
+      var socket = io.connect('http://localhost');
+      socket.on('news', function (data) {
+      document.getElementById('data').innerHTML = data.hello;
+      });
+  body
+    #data
+

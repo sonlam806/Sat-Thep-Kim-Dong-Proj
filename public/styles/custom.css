@@ -1,0 +1,80 @@
+/* body {
+    font-family: 'Times New Roman', Times, serif
+} */
+
+#header {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    font-size: 4rem;
+    color: rgb(60, 179, 113);
+}
+
+.jumbotron {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#khachhang {
+    width: 100%;
+    margin: 10px auto;
+    padding-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+#khachhang label {
+    margin-left: 20px;
+}
+
+#khachhang input {
+    width: 600px;
+    border: none;
+    outline: none;
+    margin-left: 5px;
+    padding: 0px 5px;
+}
+
+#khachhang input[type=text]:focus {
+    border-bottom: 2px solid rgb(60, 179, 113);
+    transition: 300ms;
+}
+
+/* #loaithep {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    font-size: 2.5rem;
+} */
+
+table {
+    margin-bottom: 50px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 5px;
+    text-align: center;
+    font-weight: 500;
+}
+
+th {
+    background-color: rgb(60, 179, 113);
+    color: white;
+    boder: none;
+}
+
+.table-responsive-lg {
+    margin: 50px auto;
+    width: 60%;
+}
