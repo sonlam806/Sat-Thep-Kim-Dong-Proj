@@ -1,150 +1,370 @@
-// const low = require('lowdb');
-// const FileSync = require('lowdb/adapters/FileSync');
+var danhSachBaoGia = new DanhSachBaoGia();
+var validate = new Validation();
 
-// const adapter = new FileSync('db.json');
-// const db = low(adapter);
-
-// db.defaults({
-//         items: []
-//     })
-//     .write()
-
-
-// Khai báo biến lấy từ DOM
-
-var select = document.getElementById('select');
-var canh2 = document.getElementById('canh2');
-var canh1 = document.getElementById('canh1');
-var bung = document.getElementById('bung');
-var cao = document.getElementById('cao');
-var dai = document.getElementById('dai');
-var day = document.getElementById('day');
-var khoiluong = document.getElementById('khoiluong');
-var giacong = document.getElementById('giacong');
-var dongia = document.getElementById('dongia');
-var soluong = document.getElementById('soluong');
-var thanhtien = document.getElementById('thanhtien');
-var addTable = document.getElementById('addTable');
-var save = document.getElementById('save');
-var customer = document.getElementById('customer');
-
-// Lấy giá trị khi người dùng nhập
-var selectValue;
-var canh2Value;
-var canh1Value;
-var bungValue;
-var caoValue;
-var daiValue;
-var dayValue;
-var khoiluongValue;
-var giacongValue;
-var dongiaValue;
-var soluongValue;
-var thanhtienValue;
-
-// addEventListener for input fields
-select.addEventListener('change', function () {
-    selectValue = select.value.toLowerCase();
-});
-canh2.addEventListener('change', function () {
-    canh2Value = parseInt(canh2.value);
-});
-canh1.addEventListener('change', function () {
-    canh1Value = parseInt(canh1.value);
-});
-bung.addEventListener('change', function () {
-    bungValue = parseInt(bung.value);
-});
-
-dai.addEventListener('change', function () {
-    daiValue = parseInt(dai.value);
-});
-day.addEventListener('change', function () {
-    dayValue = parseInt(day.value);
-    if (selectValue == 'c') {
-        khoiluongValue = ((canh2Value * 2 + canh1Value * 2 + bungValue) * daiValue * dayValue * 7.85) / 1000000;
-        khoiluong.value = khoiluongValue.toFixed(3);
-        khoiluong.innerHTML = khoiluong.value;
-    }
-});
-
-giacong.addEventListener('change', function () {
-    giacongValue = parseInt(giacong.value);
-    if (selectValue == 'c') {
-        dongiaValue = khoiluongValue * giacongValue;
-        dongia.value = dongiaValue;
-        dongia.innerHTML = dongia.value;
-    }
-})
-
-soluong.addEventListener('change', function () {
-    soluongValue = parseInt(soluong.value);
-    if (selectValue == 'c') {
-        thanhtienValue = dongiaValue * soluongValue;
-        thanhtien.value = thanhtienValue;
-        thanhtien.innerHTML = thanhtien.value;
-    }
-});
-
-// Add table
-addTable.addEventListener('click', newTable);
-
-function newTable() {
-    var div = document.createElement("div");
-    var content = "<table style='width:100%' id='dataTable'><tr><td><select name='' id='select'><option value='option'>Select 1 option below</option><option value='C'>Loại C</option><option value='L'>Loại L</option><option value='Tam'>Tấm</option><option value='Vit'>Vít</option><option value='Ong'>Ống</option><option value='ZU'>Z, U</option><option value='Tron'>Tròn</option><option value='Vanh'>Vành</option></select></td></tr><tr><td rowspan='2'><span>Ảnh mẫu</span><img src='pic4.jpg' alt='' width='300' height='200' /></td></tr></table><table style='width:100%' id='dataTable'><tr><th>Cánh 2</th><th>Cánh 1</th><th>Bụng, FI</th><th>Dài</th><th>Dày</th></tr><tr><td><input type='text' placeholder='Cánh 2' id='canh2' /></td><td><input type='text' placeholder='Cánh 1' id='canh1' /></td><td><input type='text' placeholder='Bụng, FI' id='bung' /></td><td><input type='text' placeholder='Dài' id='dai' /></td><td><input type='text' placeholder='Dày' id='day' /></td></tr><tr><th>Khối lượng</th><th colspan='2'>Gia công</th><th>Đơn giá</th><th>Số lượng</th></tr><tr><td><input placeholder='KL' id='khoiluong' /></td><td colspan='2'><input type='text' placeholder='Cắt, Chấn, Ống, Vít' id='giacong'/></td><td><input type='text' placeholder='Đơn giá' id='dongia' /></td><td><input type='text' placeholder='SL' id='soluong' /></td></tr><tr><td colspan='6'><span>Thành tiền</span><input type='text' placeholder='Thành tiền' id='thanhtien' /></td></tr></table>";
-    var element = document.getElementById('table');
-    div.innerHTML = content;
-    element.appendChild(div);
-};
-
-// save data
-save.addEventListener('click', saveData);
-
-function resetFields() {
-    select.value = "option";
-    canh2.value = "";
-    canh1.value = "";
-    bung.value = "";
-    dai.value = "";
-    day.value = "";
-    khoiluong.innerHTML = "";
-    giacong.value = "";
-    dongia.innerHTML = "";
-    soluong.value = "";
-    thanhtien.innerHTML = "";
-};
-
-function checkLoaiThep() {
-    if (select.value == "option") {
-        alert('Vui lòng lựa chọn loại thép trước khi thanh toán!');
-        select.value = "";
-    }
-
+// Get DOM Elements
+function DomID(id) {
+    var element = document.getElementById(id);
+    return element;
 }
 
-function saveData() {
+// Load Data from database
+function getLocalStorage() {
+    var jsonDanhSachDonHang = localStorage.getItem("DanhSachDonHang");
+    var mangDanhSachDonHang = JSON.parse(jsonDanhSachDonHang);
+    if (mangDanhSachDonHang) {
+        danhSachBaoGia.DSBG = mangDanhSachDonHang;
+        updateItems(danhSachBaoGia);
+    }
+}
 
-    var div = document.createElement("div");
-    var content = '<table><tr><th>Khách hàng</th><th>Loại thép</th><th>Dài</th><th>Dày</th><th>Đơn giá</th><th>Số lượng</th><th>Thành tiền</th></tr><tr><td>' + customer.value + '</td><td>' + selectValue.toUpperCase() + '</td><td>' + daiValue + '</td><td>' + dayValue + '</td><td>' + dongiaValue + '</td><td>' + soluongValue + '</td><td>' + thanhtienValue + '</td></tr></table>';
-    div.innerHTML = content;
-    var element = document.getElementById('dataSaved');
-    element.appendChild(div);
-    resetFields();
+getLocalStorage();
+// Save data to database
+function setLocalStorage() {
+    var jsonDanhSachDonHang = JSON.stringify(danhSachBaoGia.DSBG);
+    localStorage.setItem("DanhSachDonHang", jsonDanhSachDonHang);
+}
+
+// Save new Item
+function LuuDuLieu() {
+    // Get data from user
+    var customer = DomID("customer").value;
+    var select = DomID("select").value;
+    var canh2 = DomID("canh2").value;
+    var canh1 = DomID("canh1").value;
+    var bung = DomID("bung").value;
+    var cao = DomID('cao').value;
+    var dai = DomID("dai").value;
+    var day = DomID("day").value;
+    var khoiluong = DomID("khoiluong").value;
+    var giacong = DomID("giacong").value;
+    var dongia = DomID("dongia").value;
+    var soluong = DomID("soluong").value;
+    var thanhtien = DomID("thanhtien").value;
+    var phoi = DomID("phoi").value;
+    var error = 0;
+    // Validation
+    if (checkInputEmpty("customer", customer)) {
+        error++;
+    }
+    if (checkInputEmpty("select", select) == "option") {
+        error++;
+    }
+
+    if (error > 0) {
+        return;
+    } else {
+        // Add new Báo giá
+        var baogia = new BaoGia(
+            customer,
+            select,
+            canh2,
+            canh1,
+            bung,
+            cao,
+            dai,
+            day,
+            khoiluong,
+            dongia,
+            giacong,
+            soluong,
+            thanhtien,
+            phoi
+        );
+        danhSachBaoGia.ThemBaoGia(baogia);
+        updateItems(danhSachBaoGia);
+        setLocalStorage();
+        resetFields();
+    }
+}
+// Checking value of item
+function checkInputEmpty(ID, value) {
+    if (validate.KiemTraRong(value)) {
+        return (DomID(ID).style.borderColor = "red");
+    } else {
+        DomID(ID).style.borderColor = "green";
+    }
+}
+// Update item to show on the tabl1
+function updateItems(DanhSachBaoGia) {
+    var lstTableShowItems = document.getElementById("tbodyShowItems");
+    var tdTotalPrice = document.getElementById("totalPrice");
+    var total = 0;
+    tdTotalPrice.innerHTML = "";
+    lstTableShowItems.innerHTML = ""; // Sử dụng forEach
+
+    for (var i = 0; i < DanhSachBaoGia.DSBG.length; i++) {
+        var donHang = DanhSachBaoGia.DSBG[i];
+        // Tạo thẻ tr
+        var trDonHang = document.createElement("tr");
+        trDonHang.id = "trDonHang";
+        // Tạo thẻ td cho các đơn hàng
+        var tdCheckbox = document.createElement("td");
+        var ckbDonHang = document.createElement("input");
+        ckbDonHang.setAttribute("type", "checkbox");
+        ckbDonHang.setAttribute("class", "checkbox-customer");
+        ckbDonHang.setAttribute("value", i);
+        tdCheckbox.append(ckbDonHang);
+        var note = document.createElement("td");
+        var editButton = document.createElement("button");
+        editButton.setAttribute("onclick", "editItem(" + i + ")");
+        editButton.setAttribute("class", "btn btn-primary");
+        editButton.innerText = "Sửa thông tin";
+        note.appendChild(editButton);
+
+        var tdKhachHang = TaoTheTD("customerShow", donHang.Customer);
+        var tdLoaiThep = TaoTheTD("selectShow", donHang.Loaithep);
+        var tdSoluong = TaoTheTD("soluongShow", donHang.Soluong);
+        var tdDongia = TaoTheTD("dongiaShow", donHang.Dongia);
+        var tdThanhtien = TaoTheTD("thanhtienShow", donHang.Thanhtien);
+        trDonHang.appendChild(tdCheckbox);
+        trDonHang.appendChild(tdKhachHang);
+        trDonHang.appendChild(tdLoaiThep);
+        trDonHang.appendChild(tdSoluong);
+        trDonHang.appendChild(tdDongia);
+        trDonHang.appendChild(tdThanhtien);
+        trDonHang.appendChild(note);
+        // Append các tr vào tdbodyShowItems
+        lstTableShowItems.appendChild(trDonHang);
+        total += Math.ceil(parseInt(donHang.Thanhtien));
+        var result = total.toString();
+        tdTotalPrice.innerHTML = result;
+    }
+}
+
+function TaoTheTD(className, value) {
+    var td = document.createElement("td");
+    td.className = className;
+    td.innerHTML = value;
+    return td;
+}
+
+function checkLoaiThep() {
+    var select = DomID('select');
+    var customer = DomID('customer');
+    if (customer.value == "") {
+        alert("Vui lòng điền tên khách hàng");
+        return;
+    } else if (select.value == "option") {
+        alert("Vui lòng lựa chọn loại thép trước khi thanh toán!");
+        return;
+    }
+}
+
+function resetFields() {
+    DomID("customer").value = "";
+    DomID("select").value = "option";
+    DomID("bung").value = "";
+    DomID('cao').value = '';
+    DomID("canh2").value = "";
+    DomID("canh1").value = "";
+    DomID("dai").value = "";
+    DomID("day").value = "";
+    DomID("khoiluong").value = "";
+    DomID("giacong").value = "";
+    DomID("dongia").value = "";
+    DomID("soluong").value = "";
+    DomID("thanhtien").value = "";
+    DomID("phoi").value = "";
+}
+
+function deleteItems() {
+    var listItems = document.getElementsByClassName("checkbox-customer");
+    var listItemsChecked = []; // Mảng đơn hàng check muốn xóa theo tên khách hàng
+    for (i = 0; i < listItems.length; i++) {
+        if (listItems[i].checked) {
+            listItemsChecked.push(listItems[i].value);
+        }
+    }
+    danhSachBaoGia.XoaBaoGia(listItemsChecked);
+    updateItems(danhSachBaoGia);
+}
+
+function searchItem() {
+    var searchInput = document.getElementById("searchInput").value.toLowerCase();
+    var listMatched = danhSachBaoGia.TimKiemBaoGia(searchInput);
+    updateItems(listMatched);
+}
+
+function editItem(id) {
+    var donHang = danhSachBaoGia.TimKiemBaoGiaTheoID(parseInt(id));
+    var editItem = DomID("editItem");
+    var luuDuLieuButton = DomID("saveButton");
+    luuDuLieuButton.innerHTML = "";
+    editItem.innerHTML = "";
+    var saveButton = document.createElement("button");
+    saveButton.setAttribute("onclick", "saveItem(" + id + ")");
+    saveButton.setAttribute("class", "btn btn-primary mr-2");
+    saveButton.innerText = "Lưu hóa đơn";
+    editItem.appendChild(saveButton);
+
+    DomID("customer").value = donHang.Customer;
+    DomID("select").value = donHang.Loaithep;
+    DomID("canh2").value = donHang.Canh2;
+    DomID("canh1").value = donHang.Canh1;
+    DomID("bung").value = donHang.Bung;
+    DomID("dai").value = donHang.Dai;
+    DomID("day").value = donHang.Day;
+    DomID("khoiluong").value = donHang.Khoiluong;
+    DomID("dongia").value = donHang.Dongia;
+    DomID("giacong").value = donHang.Giacong;
+    DomID("soluong").value = donHang.Soluong;
+    DomID("thanhtien").value = donHang.Thanhtien;
+    DomID("phoi").value = donHang.Phoi;
+}
+
+function saveItem(id) {
+    // Get data from user
+    var customer = DomID("customer").value;
+    var select = DomID("select").value;
+    var canh2 = DomID("canh2").value;
+    var canh1 = DomID("canh1").value;
+    var bung = DomID("bung").value;
+    var cao = DomID('cao').value;
+    var dai = DomID("dai").value;
+    var day = DomID("day").value;
+    var khoiluong = DomID("khoiluong").value;
+    var giacong = DomID("giacong").value;
+    var dongia = DomID("dongia").value;
+    var soluong = DomID("soluong").value;
+    var thanhtien = DomID("thanhtien").value;
+    var phoi = DomID("phoi").value;
+    var error = 0;
+    // Validation
+    if (checkInputEmpty("customer", customer)) {
+        return error++;
+    }
+    if (checkInputEmpty("select", select) == "option") {
+        return error++;
+    }
 
 
-};
-// Process database
-// var item = {
-//     'loaithep": selectValue,
-//     "canh2": canh2Value,
-//     "canh1": canh1Value,
-//     "bung": bungValue,
-//     "dai": daiValue,
-//     "day": dayValue,
-//     "khoiluong": khoiluongValue,
-//     "giacong": giacongValue,
-//     "dongia": dongiaValue,
-//     "soluong": soluongValue,
-//     "thanhtien": thanhtienValue
-// }
-// db.get('items').push(item).write();
+    if (error > 0) {
+        return;
+    } else {
+        // Add new Báo giá
+        var baogia = new BaoGia(
+            customer,
+            select,
+            canh2,
+            canh1,
+            bung,
+            cao,
+            dai,
+            day,
+            khoiluong,
+            dongia,
+            giacong,
+            soluong,
+            thanhtien,
+            phoi
+        );
+        danhSachBaoGia.SuaBaoGia(id, baogia);
+        updateItems(danhSachBaoGia);
+        setLocalStorage();
+        resetFields();
+        var editItem = DomID("editItem");
+        editItem.innerHTML = "";
+        var luuDuLieuButton = DomID("saveButton");
+        luuDuLieuButton.innerHTML =
+            '<a href="#table2" onclick="LuuDuLieu()" class="btn btn-primary mr-2">Lưu đơn hàng mới';
+    }
+}
+
+// Công thức tính các loại thép
+
+function tinhtien() {
+    checkLoaiThep();
+    var customer = DomID("customer").value;
+    var select = DomID("select").value;
+    var canh2 = parseInt(DomID("canh2").value);
+    var canh1 = parseInt(DomID("canh1").value);
+    var bung = parseInt(DomID("bung").value);
+    var cao = parseInt(DomID("cao").value);
+    var dai = parseInt(DomID("dai").value);
+    var day = parseInt(DomID("day").value);
+    var giacong = parseInt(DomID("giacong").value);
+    var soluong = parseInt(DomID("soluong").value);
+
+    var khoiluong = DomID("khoiluong");
+    var dongia = DomID("dongia");
+    var thanhtien = DomID("thanhtien");
+    var phoi = DomID("phoi"); // Phôi chưa nhận giá trị từ ban đầu, khi sử dụng phải thêm .value;
+    if (select.toLowerCase() === "c") {
+        khoiluong.value =
+            (((canh2 * 2 + canh1 * 2 + bung) * dai * day * 7.85) / 1000000).toFixed(2);
+        khoiluong.innerHTML = khoiluong.value;
+        dongia.value = khoiluong.value * giacong;
+        dongia.innerHTML = dongia.value;
+        thanhtien.value = dongia.value * soluong;
+        thanhtien.innerHTML = thanhtien.value;
+        phoi.value = canh2 * 2 + canh1 * 2 + bung - day * 8;
+        phoi.innerHTML = phoi.value;
+    } else if (select.toLowerCase() === "l") {
+        phoi.value = canh1 + bung - day * 2;
+        khoiluong.value = (phoi.value * dai * day * 7.85) / 1000000;
+        dongia.value = khoiluong.value * giacong;
+        thanhtien.value = dongia.value * soluong;
+
+        khoiluong.innerHTML = khoiluong.value;
+        dongia.innerHTML = dongia.value;
+        thanhtien.innerHTML = thanhtien.value;
+        phoi.innerHTML = phoi.value;
+    } else if (select.toLowerCase() === "tấm") {
+        // Tính toán giá trị
+        khoiluong.value = (((canh1 + bung) * dai * day * 7.85) / 1000000).toFixed(2);
+        dongia.value = khoiluong.value * giacong;
+        thanhtien.value = dongia.value * soluong;
+        // Xuất ra cho người dùng dạng string
+        khoiluong.innerHTML = khoiluong.value;
+        dongia.innerHTML = dongia.value;
+        thanhtien.innerHTML = thanhtien.value;
+    } else if (select.toLowerCase() === "vít") {
+        // Tính toán giá trị
+        khoiluong.value = (((canh2 * 2 + canh1 * 2 + (cao - bung / 2 - day) * 2 - day * 8 + ((bung + day) * 3.14) / 2) / 1000000) * 7.85 * giacong).toFixed(2);
+        dongia.value = Math.round(khoiluong.value * giacong);
+        thanhtien.value = Math.round((dongia.value * soluong));
+        phoi.value = Math.round((canh2 * 2 + canh1 * 2 + (cao - bung / 2 - day) * 2 - day * 8 + ((bung + day) * 3.14) / 2));
+
+        // Xuất ra cho người dùng dạng string
+        khoiluong.innerHTML = khoiluong.value;
+        dongia.innerHTML = dongia.value;
+        thanhtien.innerHTML = thanhtien.value;
+        phoi.innerHTML = phoi.value;
+    } else if (select.toLowerCase() === "ống") {
+        // Tính toán giá trị
+        phoi.value = Math.round((bung - day) * 3.14);
+        khoiluong.value = ((phoi.value * day * dai * 7.85) / 1000000).toFixed(2);
+        dongia.value = Math.round(khoiluong.value * giacong);
+        thanhtien.value = Math.round((dongia.value * soluong));
+
+        // Xuất ra cho người dùng dạng string
+        khoiluong.innerHTML = khoiluong.value;
+        dongia.innerHTML = dongia.value;
+        thanhtien.innerHTML = thanhtien.value;
+        phoi.innerHTML = phoi.value;
+    } else if (select.toLowerCase() === "z, u") {
+        // Tính toán giá trị
+        phoi.value = Math.round((canh2 + canh1 + bung - day * 4));
+        khoiluong.value = (((canh2 + canh1 + bung) * dai * day * 7.85) / 1000000).toFixed(2);
+        dongia.value = Math.round(khoiluong.value * giacong);
+        thanhtien.value = Math.round((dongia.value * soluong));
+
+        // Xuất ra cho người dùng dạng string
+        khoiluong.innerHTML = khoiluong.value;
+        dongia.innerHTML = dongia.value;
+        thanhtien.innerHTML = thanhtien.value;
+        phoi.innerHTML = phoi.value;
+    } else if (select.toLowerCase() === "tròn") {
+        // Tính toán giá trị
+
+        khoiluong.value = ((((bung * bung) / 1000) * 6.25 * day) / 1000).toFixed(2);
+        dongia.value = Math.round(khoiluong.value * giacong);
+        thanhtien.value = Math.round((dongia.value * soluong));
+
+        // Xuất ra cho người dùng dạng string
+        khoiluong.innerHTML = khoiluong.value;
+        dongia.innerHTML = dongia.value;
+        thanhtien.innerHTML = thanhtien.value;
+
+    }
+}
