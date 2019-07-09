@@ -1,0 +1,26 @@
+table#table1
+    thead.thead-dark
+    tr
+        th Chọn đơn hàng
+        th(scope='col') Tên khách hàng
+        th(scope='col') Loại thép
+        th(scope='col') Số lượng
+        th(scope='col') Đơn giá
+        th(scope='col') Thành tiền
+        th(scope='col') Phôi
+        th(scope='col') Ghi chú
+    each post in posts
+        tr
+            td
+            td=post.customer
+            td=post.loaithep
+            td=post.dongia
+            td=post.soluong
+            td=post.thanhtien
+            td=post.phoi
+            td
+
+    tr
+        td.totalPrice(colspan='5') Cộng tiền hàng
+        td(colspan='2')
+            div#totalPrice

@@ -1,5 +1,9 @@
 var danhSachBaoGia = new DanhSachBaoGia();
-var validate = new Validation();
+
+
+const Donhang = require('../models/donhang.model');
+
+
 
 // Get DOM Elements
 function DomID(id) {
@@ -8,6 +12,9 @@ function DomID(id) {
 }
 
 // Load Data from database
+
+
+
 function getLocalStorage() {
     var jsonDanhSachDonHang = localStorage.getItem("DanhSachDonHang");
     var mangDanhSachDonHang = JSON.parse(jsonDanhSachDonHang);
@@ -43,47 +50,32 @@ function LuuDuLieu() {
     var phoi = DomID("phoi").value;
     var error = 0;
     // Validation
-    if (checkInputEmpty("customer", customer)) {
-        error++;
-    }
-    if (checkInputEmpty("select", select) == "option") {
-        error++;
-    }
 
-    if (error > 0) {
-        return;
-    } else {
-        // Add new Báo giá
-        var baogia = new BaoGia(
-            customer,
-            select,
-            canh2,
-            canh1,
-            bung,
-            cao,
-            dai,
-            day,
-            khoiluong,
-            dongia,
-            giacong,
-            soluong,
-            thanhtien,
-            phoi
-        );
-        danhSachBaoGia.ThemBaoGia(baogia);
-        updateItems(danhSachBaoGia);
-        setLocalStorage();
-        resetFields();
-    }
+    // Add new Báo giá
+    var baogia = new BaoGia(
+        customer,
+        select,
+        canh2,
+        canh1,
+        bung,
+        cao,
+        dai,
+        day,
+        khoiluong,
+        dongia,
+        giacong,
+        soluong,
+        thanhtien,
+        phoi
+    );
+    danhSachBaoGia.ThemBaoGia(baogia);
+    updateItems(danhSachBaoGia);
+    setLocalStorage();
+    resetFields();
 }
+
 // Checking value of item
-function checkInputEmpty(ID, value) {
-    if (validate.KiemTraRong(value)) {
-        return (DomID(ID).style.borderColor = "red");
-    } else {
-        DomID(ID).style.borderColor = "green";
-    }
-}
+
 // Update item to show on the tabl1
 function updateItems(DanhSachBaoGia) {
     var lstTableShowItems = document.getElementById("tbodyShowItems");
@@ -230,45 +222,35 @@ function saveItem(id) {
     var phoi = DomID("phoi").value;
     var error = 0;
     // Validation
-    if (checkInputEmpty("customer", customer)) {
-        return error++;
-    }
-    if (checkInputEmpty("select", select) == "option") {
-        return error++;
-    }
 
-
-    if (error > 0) {
-        return;
-    } else {
-        // Add new Báo giá
-        var baogia = new BaoGia(
-            customer,
-            select,
-            canh2,
-            canh1,
-            bung,
-            cao,
-            dai,
-            day,
-            khoiluong,
-            dongia,
-            giacong,
-            soluong,
-            thanhtien,
-            phoi
-        );
-        danhSachBaoGia.SuaBaoGia(id, baogia);
-        updateItems(danhSachBaoGia);
-        setLocalStorage();
-        resetFields();
-        var editItem = DomID("editItem");
-        editItem.innerHTML = "";
-        var luuDuLieuButton = DomID("saveButton");
-        luuDuLieuButton.innerHTML =
-            '<a href="#table2" onclick="LuuDuLieu()" class="btn btn-primary mr-2">Lưu đơn hàng mới';
-    }
+    // Add new Báo giá
+    var baogia = new BaoGia(
+        customer,
+        select,
+        canh2,
+        canh1,
+        bung,
+        cao,
+        dai,
+        day,
+        khoiluong,
+        dongia,
+        giacong,
+        soluong,
+        thanhtien,
+        phoi
+    );
+    danhSachBaoGia.SuaBaoGia(id, baogia);
+    updateItems(danhSachBaoGia);
+    setLocalStorage();
+    resetFields();
+    var editItem = DomID("editItem");
+    editItem.innerHTML = "";
+    var luuDuLieuButton = DomID("saveButton");
+    luuDuLieuButton.innerHTML =
+        '<a href="#table2" onclick="LuuDuLieu()" class="btn btn-primary mr-2">Lưu đơn hàng mới';
 }
+
 
 // Công thức tính các loại thép
 

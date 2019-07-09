@@ -1,0 +1,164 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+    link(rel='stylesheet', href='./styles/custom.css')
+    title Steel Project
+  body
+    // navbar
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      a.navbar-brand(href='#') SẮT THÉP KIM ĐỒNG
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item.active
+            a.nav-link(href='#')
+              | Sản phẩm
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href='#') Thanh toán
+          li.nav-item.dropdown
+            a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+              | Dropdown
+            .dropdown-menu(aria-labelledby='navbarDropdown')
+              a.dropdown-item(href='#') Action
+              a.dropdown-item(href='#') Another action
+              .dropdown-divider
+              a.dropdown-item(href='#') Something else here
+          li.nav-item
+            a.nav-link.disabled(href='#', tabindex='-1', aria-disabled='true') Disabled
+        form.form-inline.my-2.my-lg-0
+          input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
+          button.btn.btn-outline-success.my-2.my-sm-0(type='submit')
+            | Search
+    .jumbotron
+      img(src='./image/logo2.png', alt='logo here', width='300p')
+      h1.display-4 Công ty TNHH Thép Kim Đồng
+      p.lead Kinh doanh: Thép tấm, Thép lá, Thép hình UIV, Cắt - Chấn - Cuốn ống,
+      p Địa chỉ: i18A, Kp5, P.Tân Hiệp, BH-ĐN
+      hr.my-4
+    // Bắt đầu nội dung App
+    .container
+      h1#header BẢNG BÁO GIÁ
+      hr
+      if errors
+          each error in errors
+            .alert.alert-danger= error
+    #bangtinh
+      #dulieu
+        
+        .container
+          form.form-group
+            .form-group.mx-sm-3.mb-2
+              input#searchInput.form-control(onkeyup='searchItem()', onchange='searchItem()', type='text', placeholder='Tìm kiếm đơn hàng theo tên khách hàng')
+        #dataSaved.container(width='100%')
+          
+          table#table1
+            thead.thead-dark
+            tr
+                th Chọn đơn hàng
+                th(scope='col') Tên khách hàng
+                th(scope='col') Loại thép
+                th(scope='col') Số lượng
+                th(scope='col') Đơn giá
+                th(scope='col') Thành tiền
+                th(scope='col') Phôi
+                th(scope='col') Ghi chú
+            if posts  
+              each post in posts
+                tr
+                  td
+                  td=post.customer
+                  td=post.loaithep
+                  td=post.dongia
+                  td=post.soluong
+                  td=post.thanhtien
+                  td=post.phoi
+                  td
+            tr
+              td.totalPrice(colspan='5') Cộng tiền hàng
+              td(colspan='2')
+                div
+        // Dữ liệu tính toán
+        #saveButton
+            
+            a.btn.btn-primary.mr-2(href='#table2', onclick='LuuDuLieu()') Lưu đơn hàng mới
+            a.btn.btn-primary.mr-2(href='#table2', onclick='tinhtien()') Tính tiền
+        #editItem
+            a.btn.btn-danger.mr-2(href='#table1', onclick='deleteItems()') Xóa đơn hàng
+        form(action="/post" method="POST")
+            #luu-du-lieu
+            #khachhang
+              label(for='customer') Khách hàng:
+              input#customer(type='text', name='customer', placeholder='Nhập tên khách hàng' autofocus value=values ? values.customer : "")
+              hr
+            button(type="submit") Submit
+            table#table2
+                tbody
+                    tr
+                        th Loại thép
+                        td
+                            select#select(name='loaithep' value=values ? values.loaithep : 'option')
+                                option(value='option') Select 1 option below
+                                option(value='C') Loại C
+                                option(value='L') Loại L
+                                option(value='Tấm') Tấm
+                                option(value='Vít') Vít
+                                option(value='Ống') Ống
+                                option(value='Z, U') Z, U
+                                option(value='Tròn') Tròn
+                                option(value='Vành') Vành
+                    tr
+                    th Cánh 2
+                    td
+                        input#canh2(type='text', placeholder='Cánh 2', name="canh2")
+                    tr
+                    th Cánh 1
+                    td
+                        input#canh1(type='text', placeholder='Cánh 1', name="canh1")
+                    tr
+                    th Bụng, FI
+                    td
+                        input#bung(type='text', placeholder='Bụng, FI', name="bung")
+                    tr
+                    th Cao
+                    td
+                        input#cao(type='text', placeholder='Cao', name="cao")
+                    tr
+                    th Dài
+                    td
+                        input#dai(type='text', placeholder='Dài', name="dai")
+                    tr
+                    th Dày
+                    td
+                        input#day(type='text', placeholder='Dày', name='day')
+                    tr
+                    th Gia công
+                    td
+                        input#giacong(type='text', placeholder='Cắt, Chấn, Ống, Vít', name="giacong")
+                    tr
+                    th Số lượng
+                    td
+                        input#soluong(type='text', placeholder='Số lượng', name="soluong")
+                    tr
+                    th Khối lượng
+                    td
+                        input#khoiluong(type='text', placeholder='Khối lượng', readonly='', name="khoiluong")
+                    tr
+                    th Đơn giá
+                    td
+                        input#dongia(type='text', placeholder='Đơn giá', readonly='', name="dongia")
+                    tr
+                    th Thành tiền
+                    td
+                        input#thanhtien(type='text', placeholder='Thành tiền', readonly='', name="thanhtien")
+                    tr
+                    th Phôi
+                    td
+                        input#phoi(type='text', placeholder='Phôi', readonly='', name="phoi")
+    
+    script(src='js/main.js')
