@@ -4,6 +4,30 @@ function DomID(id) {
     return element;
 }
 
+// Search Đơn hàng
+function searchItem() {
+    let searchInput = DomID('searchInput').value;
+    let trArray = Array.from(document.querySelectorAll('.tenKhachHang'));
+    let nameArray = trArray.map(function (item) {
+        return item.textContent;
+    })
+    let result = nameArray.filter(function (item) {
+        return item.toLowerCase().indexOf(searchInput) !== -1;
+    });
+    console.log(result);
+
+
+
+
+    // let tenKhachHang = DomID('tenKhachhang');
+    // tenKhachHang.innerHTML = '';
+    // console.log(tenKhachHang);
+
+    // if (searchInput !== tenKhachHang) {
+    //     searchResult.innerHTML = tenKhachHang;
+    // }
+}
+
 // Công thức tính các loại thép
 
 function tinhtien() {

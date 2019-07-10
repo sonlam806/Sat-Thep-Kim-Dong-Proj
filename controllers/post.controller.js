@@ -2,9 +2,14 @@ const Donhang = require('../models/donhang.model');
 
 module.exports.showItems = async (req, res) => {
     try {
+        let totalPrice = 0;
         const posts = await Donhang.find();
+        for (let i = 0; i < posts.length; i++) {
+            totalPrice = totalPrice + posts[i].thanhtien;
+        }
         res.render('post', {
-            posts: posts
+            posts: posts,
+            totalPrice: totalPrice
         })
     } catch (err) {
         res.json({
@@ -12,15 +17,14 @@ module.exports.showItems = async (req, res) => {
         });
     }
 }
-
+// Find item by ID
 module.exports.findItems = async (req, res) => {
     try {
-        const posts = await Donhang.find();
+
         const matchedItems = await Donhang.findById(
             req.params.postId
         );
         res.render('allPosts', {
-            posts: posts,
             matchedItems: matchedItems
         })
     } catch (err) {
@@ -30,6 +34,31 @@ module.exports.findItems = async (req, res) => {
     }
 }
 
+// Find item by Name
+module.exports.searchItems = async (req, res) => {
+    try {
+        var q = req.query.q.toLowerCase();
+        let totalPrice = 0;
+        const searchItems = await Donhang.find();
+
+        let result = searchItems.filter(function (item) {
+            return item.customer.toLowerCase().indexOf(q) !== -1;
+        });
+        for (let i = 0; i < result.length; i++) {
+            totalPrice += result[i].thanhtien;
+        }
+        res.render('search', {
+            result: result,
+            totalPrice: totalPrice
+        });
+    } catch (err) {
+        res.json({
+            message: err
+        });
+    }
+}
+
+// Post new item
 module.exports.postItem = async (req, res) => {
     const post = new Donhang({
         customer: req.body.customer,
@@ -64,6 +93,21 @@ module.exports.postItem = async (req, res) => {
                 message: err
             });
         }
+    }
+}
+
+module.exports.updateItem = async (req, res) => {
+    try {
+        const updatedPost = await Donhang.updateOne({
+            _id: req.params.postId
+        }, {
+            $set: req.body
+        });
+        res.redirect('/');
+    } catch (err) {
+        res.json({
+            message: err
+        })
     }
 }
 

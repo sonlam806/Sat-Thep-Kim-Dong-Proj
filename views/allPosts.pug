@@ -50,7 +50,7 @@ html(lang='en')
           form.form-group
             .form-group.mx-sm-3.mb-2
               input#searchInput.form-control(onkeyup='searchItem()', name="findCustomer" type='text', placeholder='Tìm kiếm đơn hàng theo tên khách hàng')
-              button(type="submit") Search
+              button(type="submit" class="btn btn-success") Search
         #dataSaved.container(width='100%')
           
           table#table1
@@ -64,32 +64,31 @@ html(lang='en')
                 th(scope='col') Thành tiền
                 th(scope='col') Phôi
                 th(scope='col') Ghi chú
-            if posts  
-              each post in posts
+            if matchedItems
                 tr
                   td
-                  td=post.customer
-                  td=post.loaithep
-                  td=post.soluong
-                  td=post.dongia
-                  td=post.thanhtien
-                  td=post.phoi
+                  td=matchedItems.customer
+                  td=matchedItems.loaithep
+                  td=matchedItems.soluong
+                  td=matchedItems.dongia
+                  td=matchedItems.thanhtien
+                  td=matchedItems.phoi
                   td
-                    a(class="btn btn-info" href= '/post/' + post._id) Sửa đơn hàng
+                    
             tr
               td.totalPrice(colspan='5') Cộng tiền hàng
               td(colspan='2')
                 div
         // Dữ liệu tính toán
-        
-        form#luu-du-lieu(action="/post" method="POST")
+      if matchedItems  
+        form#luu-du-lieu(action='/post/update/' + matchedItems._id method="POST")
+            button(type="submit" class="btn btn-primary mr-2") Lưu lại đơn hàng
             
             #khachhang
               label(for='customer') Khách hàng:
               input#customer(type='text', name='customer', placeholder='Nhập tên khách hàng' autofocus value=values ? values.customer : matchedItems ? matchedItems.customer : '')
               hr
             div#Nutxuly
-              button(type="submit" class="btn btn-primary mr-2") Lưu đơn hàng mới
               a.btn.btn-primary.mr-2(href='#table2', onclick='tinhtien()', data-toggle="tooltip" data-placement="top" title="Tính giá trị cho các mục Khối lượng, Đơn giá, Thành tiền và Phôi") Tính tiền
               a.btn.btn-danger.mr-2(href='#table1', onclick='deleteItems()', data-toggle="tooltip" data-placement="top" title="Xóa một đơn hàng có sẵn trong database") Xóa đơn hàng
             table#table2
@@ -97,8 +96,7 @@ html(lang='en')
                     tr
                         th Loại thép
                         td
-                            select#select(name='loaithep' value=values ? values.loaithep : matchedItems ? matchedItems.loaithep : 'option')
-                                option(value='option') Select 1 option below
+                            select#select(name='loaithep' value=matchedItems.loaithep)
                                 option(value='C') Loại C
                                 option(value='L') Loại L
                                 option(value='Tấm') Tấm

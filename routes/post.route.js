@@ -10,9 +10,16 @@ router.post('/', checkInput.checkInput, controller.postItem);
 
 router.get('/:postId', controller.findItems);
 
-// router.put('')
+// Search items
+router.get('/search', controller.searchItems);
+
+// Update a post
+
+router.post('/update/:postId', checkInput.checkInput, controller.updateItem);
 
 
+
+// Delete a post
 router.get('/delete/:postId', controller.deleteItem);
 
 

@@ -1,0 +1,96 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+    link(rel='stylesheet', href='./styles/custom.css')
+    title Steel Project
+  body
+    // navbar
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      a.navbar-brand(href='/') SẮT THÉP KIM ĐỒNG
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item.active
+            a.nav-link(href='#')
+              | Sản phẩm
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href='#') Thanh toán
+          li.nav-item.dropdown
+            a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+              | Dropdown
+            .dropdown-menu(aria-labelledby='navbarDropdown')
+              a.dropdown-item(href='#') Action
+              a.dropdown-item(href='#') Another action
+              .dropdown-divider
+              a.dropdown-item(href='#') Something else here
+          li.nav-item
+            a.nav-link.disabled(href='#', tabindex='-1', aria-disabled='true') Disabled
+        form.form-inline.my-2.my-lg-0
+          input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
+          button.btn.btn-outline-success.my-2.my-sm-0(type='submit')
+            | Search
+    .jumbotron
+      img(src='./image/logo2.png', alt='logo here', width='300p')
+      h1.display-4 Công ty TNHH Thép Kim Đồng
+      p.lead Kinh doanh: Thép tấm, Thép lá, Thép hình UIV, Cắt - Chấn - Cuốn ống,
+      p Địa chỉ: i18A, Kp5, P.Tân Hiệp, BH-ĐN
+      hr.my-4
+    // Bắt đầu nội dung App
+    .container
+      h1#header BẢNG BÁO GIÁ
+      hr
+      if errors
+          each error in errors
+            .alert.alert-danger= error
+    #bangtinh
+      #dulieu
+        
+        .container
+          form.form-group
+            .form-group.mx-sm-3.mb-2
+              input#searchInput.form-control(onkeyup='searchItem()', name="findCustomer" type='text', placeholder='Tìm kiếm đơn hàng theo tên khách hàng')
+              button(type="submit") Search
+        #dataSaved.container(width='100%')
+          
+          table#table1
+            thead.thead-dark
+            tr
+                th Chọn đơn hàng
+                th(scope='col') Tên khách hàng
+                th(scope='col') Loại thép
+                th(scope='col') Số lượng
+                th(scope='col') Đơn giá
+                th(scope='col') Thành tiền
+                th(scope='col') Phôi
+                th(scope='col' colspan='2') Ghi chú
+            if result  
+              each post in result
+                tr
+                  td
+                  td=post.customer
+                  td=post.loaithep
+                  td=post.soluong
+                  td=post.dongia
+                  td=post.thanhtien
+                  td=post.phoi
+                  td
+                    a(class="btn btn-info" href= '/post/' + post._id) Sửa đơn hàng
+                  td
+                    a(class="btn btn-danger" href= '/post/delete/' + post._id) Xóa đơn hàng
+                  
+            tr
+              if totalPrice
+                td.totalPrice(colspan='5') Cộng tiền hàng
+                td(colspan='2')
+                  div= totalPrice
+        // Dữ liệu tính toán
+        
+       
+    
+    script(src='js/main.js')
