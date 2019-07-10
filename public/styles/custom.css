@@ -17,7 +17,8 @@
 
 #khachhang {
     width: 100%;
-    margin: 10px auto;
+    height: 8vh;
+    margin: 10px 0px 0px 0px;
     padding-bottom: 20px;
     font-size: 1.5rem;
     text-align: center;
@@ -28,7 +29,6 @@
 }
 
 #khachhang input {
-
     border: none;
     outline: none;
     margin-left: 5px;
@@ -42,16 +42,12 @@
     transition: 400ms;
 }
 
-
-
 table {
     margin-bottom: 20px;
     border: none;
-
 }
 
-#table1 th,
-#table1 td {
+#table1 th, #table1 td {
     border: none;
 }
 
@@ -81,12 +77,12 @@ table {
 
 #table2 {
     display: flex;
+    width: 80vw;
     justify-content: center;
     align-items: center;
 }
 
-#table2 th,
-#table2 td {
+#table2 th, #table2 td {
     border: none;
 }
 
@@ -116,6 +112,7 @@ table {
 
 #luu-du-lieu {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
@@ -133,4 +130,16 @@ form {
 .trDonHang:hover {
     background-color: rgb(60, 179, 113);
     cursor: pointer;
+}
+
+#Nutxuly {
+    margin-bottom: 10px;
+}
+
+#Nutxuly button {
+    box-shadow: 1px 3px 5px black;
+}
+
+#Nutxuly a {
+    box-shadow: 1px 3px 5px black;
 }

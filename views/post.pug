@@ -54,7 +54,8 @@ html(lang='en')
         .container
           form.form-group
             .form-group.mx-sm-3.mb-2
-              input#searchInput.form-control(onkeyup='searchItem()', onchange='searchItem()', type='text', placeholder='Tìm kiếm đơn hàng theo tên khách hàng')
+              input#searchInput.form-control(onkeyup='searchItem()', name="findCustomer" type='text', placeholder='Tìm kiếm đơn hàng theo tên khách hàng')
+              button(type="submit") Search
         #dataSaved.container(width='100%')
           
           table#table1
@@ -67,36 +68,37 @@ html(lang='en')
                 th(scope='col') Đơn giá
                 th(scope='col') Thành tiền
                 th(scope='col') Phôi
-                th(scope='col') Ghi chú
+                th(scope='col' colspan='2') Ghi chú
             if posts  
               each post in posts
                 tr
                   td
                   td=post.customer
                   td=post.loaithep
-                  td=post.dongia
                   td=post.soluong
+                  td=post.dongia
                   td=post.thanhtien
                   td=post.phoi
                   td
+                    a(class="btn btn-info" href= '/post/' + post._id) Sửa đơn hàng
+                  td
+                    a(class="btn btn-info" href= '/post/delete/' + post._id) Xóa đơn hàng
             tr
               td.totalPrice(colspan='5') Cộng tiền hàng
               td(colspan='2')
                 div
         // Dữ liệu tính toán
-        #saveButton
+        
+        form#luu-du-lieu(action="/post" method="POST")
             
-            a.btn.btn-primary.mr-2(href='#table2', onclick='LuuDuLieu()') Lưu đơn hàng mới
-            a.btn.btn-primary.mr-2(href='#table2', onclick='tinhtien()') Tính tiền
-        #editItem
-            a.btn.btn-danger.mr-2(href='#table1', onclick='deleteItems()') Xóa đơn hàng
-        form(action="/post" method="POST")
-            #luu-du-lieu
             #khachhang
               label(for='customer') Khách hàng:
               input#customer(type='text', name='customer', placeholder='Nhập tên khách hàng' autofocus value=values ? values.customer : "")
               hr
-            button(type="submit") Submit
+            div#Nutxuly
+              button(type="submit" class="btn btn-primary mr-2") Lưu đơn hàng mới
+              a.btn.btn-primary.mr-2(href='#table2', onclick='tinhtien()', data-toggle="tooltip" data-placement="top" title="Tính giá trị cho các mục Khối lượng, Đơn giá, Thành tiền và Phôi") Tính tiền
+              a.btn.btn-danger.mr-2(href='#table1', onclick='deleteItems()', data-toggle="tooltip" data-placement="top" title="Xóa một đơn hàng có sẵn trong database") Xóa đơn hàng
             table#table2
                 tbody
                     tr
@@ -115,50 +117,50 @@ html(lang='en')
                     tr
                     th Cánh 2
                     td
-                        input#canh2(type='text', placeholder='Cánh 2', name="canh2")
+                        input#canh2(type='text', placeholder='Cánh 2', name="canh2" value=matchedItems? matchedItems.canh2 : '') 
                     tr
                     th Cánh 1
                     td
-                        input#canh1(type='text', placeholder='Cánh 1', name="canh1")
+                        input#canh1(type='text', placeholder='Cánh 1', name="canh1" value=matchedItems? matchedItems.canh1 : '')
                     tr
                     th Bụng, FI
                     td
-                        input#bung(type='text', placeholder='Bụng, FI', name="bung")
+                        input#bung(type='text', placeholder='Bụng, FI', name="bung" value=matchedItems? matchedItems.bung : '')
                     tr
                     th Cao
                     td
-                        input#cao(type='text', placeholder='Cao', name="cao")
+                        input#cao(type='text', placeholder='Cao', name="cao" value=matchedItems? matchedItems.cao : '')
                     tr
                     th Dài
                     td
-                        input#dai(type='text', placeholder='Dài', name="dai")
+                        input#dai(type='text', placeholder='Dài', name="dai" value=matchedItems? matchedItems.dai : '')
                     tr
                     th Dày
                     td
-                        input#day(type='text', placeholder='Dày', name='day')
+                        input#day(type='text', placeholder='Dày', name='day' value=matchedItems? matchedItems.day : '')
                     tr
                     th Gia công
                     td
-                        input#giacong(type='text', placeholder='Cắt, Chấn, Ống, Vít', name="giacong")
+                        input#giacong(type='text', placeholder='Cắt, Chấn, Ống, Vít', name="giacong" value=matchedItems? matchedItems.giacong : '')
                     tr
                     th Số lượng
                     td
-                        input#soluong(type='text', placeholder='Số lượng', name="soluong")
+                        input#soluong(type='text', placeholder='Số lượng', name="soluong" value=matchedItems? matchedItems.soluong : '')
                     tr
                     th Khối lượng
                     td
-                        input#khoiluong(type='text', placeholder='Khối lượng', readonly='', name="khoiluong")
+                        input#khoiluong(type='text', placeholder='Khối lượng', readonly='', name="khoiluong" value=matchedItems? matchedItems.khoiluong : '')
                     tr
                     th Đơn giá
                     td
-                        input#dongia(type='text', placeholder='Đơn giá', readonly='', name="dongia")
+                        input#dongia(type='text', placeholder='Đơn giá', readonly='', name="dongia" value=matchedItems? matchedItems.dongia : '')
                     tr
                     th Thành tiền
                     td
-                        input#thanhtien(type='text', placeholder='Thành tiền', readonly='', name="thanhtien")
+                        input#thanhtien(type='text', placeholder='Thành tiền', readonly='', name="thanhtien" value=matchedItems? matchedItems.thanhtien : '')
                     tr
                     th Phôi
                     td
-                        input#phoi(type='text', placeholder='Phôi', readonly='', name="phoi")
+                        input#phoi(type='text', placeholder='Phôi', readonly='', name="phoi" value=matchedItems? matchedItems.phoi : '')
     
     script(src='js/main.js')
