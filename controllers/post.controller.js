@@ -87,7 +87,7 @@ module.exports.postItem = async (req, res) => {
     } else {
         try {
             const savedPost = await post.save()
-            res.redirect('/post'); // Có thể có lỗi chỗ này
+            res.redirect('/'); // Có thể có lỗi chỗ này
         } catch (err) {
             res.json({
                 message: err

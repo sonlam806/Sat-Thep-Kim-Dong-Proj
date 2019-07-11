@@ -57,10 +57,10 @@ html(lang='en')
               input#searchInput.form-control(onkeyup='searchItem()', onkeychange='searchItem()' name="q" type='text', placeholder='Tìm kiếm đơn hàng theo tên khách hàng')
               
         #dataSaved.container(width='100%')
+         
           
           table#table1
             thead.thead-dark
-          
             tr
                 th Chọn đơn hàng
                 th(scope='col') Tên khách hàng
@@ -71,11 +71,12 @@ html(lang='en')
                 th(scope='col') Phôi
                 th(scope='col' colspan='2') Ghi chú
             div#searchResult
+                 
               if posts  
                 each post in posts
-                  tr
+                  tr(class='tenKhachHang')
                     td
-                    td(class='tenKhachHang')=post.customer
+                    td(class='customer')=post.customer
                     td=post.loaithep
                     td=post.soluong
                     td=post.dongia
@@ -85,7 +86,6 @@ html(lang='en')
                       a(class="btn btn-info" href= '/post/' + post._id) Sửa đơn hàng
                     td
                       a(class="btn btn-danger" href= '/post/delete/' + post._id) Xóa đơn hàng
-                    
               tr
                 if totalPrice
                   td.totalPrice(colspan='5') Cộng tiền hàng

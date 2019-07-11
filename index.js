@@ -11,7 +11,7 @@ mongoose.connect(
 
 
 const postRoute = require('./routes/post.route');
-
+const homeRoute = require('./routes/home.router');
 
 app.use(express.urlencoded({
     extended: true
@@ -27,6 +27,6 @@ app.use(express.static("public"));
 
 app.use('/post', postRoute);
 
-app.get('/', postRoute);
+app.use('/', homeRoute);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
