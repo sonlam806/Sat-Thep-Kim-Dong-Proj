@@ -57,8 +57,10 @@ html(lang='en')
               input#searchInput.form-control(onkeyup='searchItem()', onkeychange='searchItem()' name="q" type='text', placeholder='Tìm kiếm đơn hàng theo tên khách hàng')
               
         #dataSaved.container(width='100%')
-         
-          
+          div
+            span Ngày lập đơn hàng: 
+            span=renderTime
+        
           table#table1
             thead.thead-dark
             tr
@@ -82,7 +84,6 @@ html(lang='en')
                     td=post.dongia
                     td=post.thanhtien
                     td=post.phoi
-                    td=post.date
                     td
                       a(class="btn btn-info" href= '/' + post._id) Sửa đơn hàng
                     td

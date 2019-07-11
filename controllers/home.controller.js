@@ -1,43 +1,38 @@
-const Donhang = require('../models/donhang.model');
+const Donhang = require("../models/donhang.model");
+const moment = require("moment");
 
 module.exports.showItems = async (req, res) => {
   try {
-
-    const allPosts = await Donhang.find();
-    let posts = [];
-
-    var now = new Date;
-    var dateNow = now.getDate();
-    for (let i = 0; i < allPosts.length; i++) {
-
-      let postDate = allPosts[i].date.getDate();
-      if (dateNow === postDate) {
-        posts.push(allPosts[i]);
+    const today = moment().startOf('day');
+    let allPosts = await Donhang.find({
+      date: {
+        $gte: today.toDate(),
+        $lte: moment(today).endOf('day').toDate()
       }
-    }
-    res.render('index', {
-      posts: posts
-    })
-  } catch (err) {
-    res.render('index');
-  }
-}
-// Find item by ID
-module.exports.findItems = async (req, res) => {
-  try {
+    });
 
-    const matchedItems = await Donhang.findById(
-      req.params.postId
-    );
-    res.render('allPosts', {
-      matchedItems: matchedItems
-    })
+    res.render('index', {
+      posts: allPosts
+    });
   } catch (err) {
     res.json({
       message: err
     });
   }
-}
+};
+// Find item by ID
+module.exports.findItems = async (req, res) => {
+  try {
+    const matchedItems = await Donhang.findById(req.params.postId);
+    res.render("allPosts", {
+      matchedItems: matchedItems
+    });
+  } catch (err) {
+    res.json({
+      message: err
+    });
+  }
+};
 
 // Find item by Name
 module.exports.searchItems = async (req, res) => {
@@ -52,7 +47,7 @@ module.exports.searchItems = async (req, res) => {
     for (let i = 0; i < result.length; i++) {
       totalPrice += result[i].thanhtien;
     }
-    res.render('search', {
+    res.render("search", {
       result: result,
       totalPrice: totalPrice
     });
@@ -61,7 +56,7 @@ module.exports.searchItems = async (req, res) => {
       message: err
     });
   }
-}
+};
 
 // Post new item
 module.exports.postItem = async (req, res) => {
@@ -84,22 +79,22 @@ module.exports.postItem = async (req, res) => {
 
   var error = 0;
   // Validation
-  if (req.body.customer == '' || req.body.loaithep == "option") {
+  if (req.body.customer == "" || req.body.loaithep == "option") {
     error++;
   }
   if (error > 0) {
     return;
   } else {
     try {
-      const savedPost = await post.save()
-      res.redirect('./'); // Có thể có lỗi chỗ này
+      const savedPost = await post.save();
+      res.redirect("./"); // Có thể có lỗi chỗ này
     } catch (err) {
       res.json({
         message: err
       });
     }
   }
-}
+};
 
 module.exports.updateItem = async (req, res) => {
   try {
@@ -108,13 +103,13 @@ module.exports.updateItem = async (req, res) => {
     }, {
       $set: req.body
     });
-    res.redirect('/');
+    res.redirect("/");
   } catch (err) {
     res.json({
       message: err
-    })
+    });
   }
-}
+};
 
 module.exports.deleteItem = async (req, res) => {
   try {
@@ -122,10 +117,10 @@ module.exports.deleteItem = async (req, res) => {
       _id: req.params.postId
     });
     const posts = await Donhang.find();
-    res.redirect('/');
+    res.redirect("/");
   } catch (err) {
     res.json({
       message: err
     });
   }
-}
+};
