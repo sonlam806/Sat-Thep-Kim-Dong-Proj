@@ -10,9 +10,15 @@ module.exports.showItems = async (req, res) => {
         $lte: moment(today).endOf('day').toDate()
       }
     });
-
+    let renderTime = moment().format('L');
+    let totalPrice = 0;
+    allPosts.reduce(function (post1, post2) {
+      return totalPrice += post1.thanhtien + post2.thanhtien;
+    })
     res.render('index', {
-      posts: allPosts
+      posts: allPosts,
+      renderTime: renderTime,
+      totalPrice: totalPrice
     });
   } catch (err) {
     res.json({
