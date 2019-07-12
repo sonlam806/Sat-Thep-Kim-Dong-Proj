@@ -12,9 +12,9 @@ module.exports.showItems = async (req, res) => {
     });
     let renderTime = moment().format('L');
     let totalPrice = 0;
-    allPosts.reduce(function (post1, post2) {
-      return totalPrice += post1.thanhtien + post2.thanhtien;
-    })
+    for (let i = 0; i < allPosts.length; i++) {
+      totalPrice += allPosts[i].thanhtien;
+    }
     res.render('index', {
       posts: allPosts,
       renderTime: renderTime,
@@ -66,8 +66,23 @@ module.exports.searchItems = async (req, res) => {
 
 // Post new item
 module.exports.postItem = async (req, res) => {
+  function titleCase(str) {
+    var splitStr = str.trim().split(' ');
+
+    for (var i = 0; i < splitStr.length; i++) {
+      // You do not need to check if i is larger than splitStr length, as your for does that for you
+      // Assign it back to the array
+      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+
+    }
+    // Directly return the joined string
+
+    return splitStr.join(' ');
+  }
+  let customerInput = titleCase(req.body.customer);
+
   const post = new Donhang({
-    customer: req.body.customer,
+    customer: customerInput,
     loaithep: req.body.loaithep,
     canh2: req.body.canh2,
     canh1: req.body.canh1,
@@ -82,23 +97,13 @@ module.exports.postItem = async (req, res) => {
     thanhtien: req.body.thanhtien,
     phoi: req.body.phoi
   });
-
-  var error = 0;
-  // Validation
-  if (req.body.customer == "" || req.body.loaithep == "option") {
-    error++;
-  }
-  if (error > 0) {
-    return;
-  } else {
-    try {
-      const savedPost = await post.save();
-      res.redirect("./"); // Có thể có lỗi chỗ này
-    } catch (err) {
-      res.json({
-        message: err
-      });
-    }
+  try {
+    const savedPost = await post.save();
+    res.redirect("/"); // Có thể có lỗi chỗ này
+  } catch (err) {
+    res.json({
+      message: err
+    });
   }
 };
 

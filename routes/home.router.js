@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const checkInput = require('../middlewares/checkInput.middleware');
-const controller = require('../controllers/home.controller');
+const checkInput = require('../middlewares/checkHomepageInput.middleware');
+const controller = require('../controllers/home.controller')
 
 router.get('/', controller.showItems);
 
-router.post('/', checkInput.checkInput, controller.postItem);
+router.post('/', checkInput.checkHomepageInput, controller.postItem);
 
 router.get('/:postId', controller.findItems);
 
@@ -15,7 +15,7 @@ router.get('/search', controller.searchItems);
 
 // Update a post
 
-router.post('/update/:postId', checkInput.checkInput, controller.updateItem);
+router.post('/update/:postId', checkInput.checkHomepageInput, controller.updateItem);
 
 
 

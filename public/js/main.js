@@ -47,17 +47,17 @@ function tinhtien() {
       1000000
     ).toFixed(2);
     khoiluong.innerHTML = khoiluong.value;
-    dongia.value = khoiluong.value * giacong;
+    dongia.value = (khoiluong.value * giacong).toFixed(2);
     dongia.innerHTML = dongia.value;
-    thanhtien.value = dongia.value * soluong;
+    thanhtien.value = (dongia.value * soluong).toFixed(2);
     thanhtien.innerHTML = thanhtien.value;
     phoi.value = canh2 * 2 + canh1 * 2 + bung - day * 8;
     phoi.innerHTML = phoi.value;
   } else if (select.toLowerCase() === "l") {
     phoi.value = canh1 + bung - day * 2;
-    khoiluong.value = (phoi.value * dai * day * 7.85) / 1000000;
-    dongia.value = khoiluong.value * giacong;
-    thanhtien.value = dongia.value * soluong;
+    khoiluong.value = ((phoi.value * dai * day * 7.85) / 1000000).toFixed(2);
+    dongia.value = (khoiluong.value * giacong).toFixed(2);
+    thanhtien.value = (dongia.value * soluong).toFixed(2);
 
     khoiluong.innerHTML = khoiluong.value;
     dongia.innerHTML = dongia.value;
@@ -78,10 +78,10 @@ function tinhtien() {
     // Tính toán giá trị
     khoiluong.value = (
       ((canh2 * 2 +
-        canh1 * 2 +
-        (cao - bung / 2 - day) * 2 -
-        day * 8 +
-        ((bung + day) * 3.14) / 2) /
+          canh1 * 2 +
+          (cao - bung / 2 - day) * 2 -
+          day * 8 +
+          ((bung + day) * 3.14) / 2) /
         1000000) *
       7.85 *
       giacong
@@ -90,10 +90,10 @@ function tinhtien() {
     thanhtien.value = Math.round(dongia.value * soluong);
     phoi.value = Math.round(
       canh2 * 2 +
-        canh1 * 2 +
-        (cao - bung / 2 - day) * 2 -
-        day * 8 +
-        ((bung + day) * 3.14) / 2
+      canh1 * 2 +
+      (cao - bung / 2 - day) * 2 -
+      day * 8 +
+      ((bung + day) * 3.14) / 2
     );
 
     // Xuất ra cho người dùng dạng string
