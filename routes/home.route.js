@@ -6,6 +6,7 @@ const controller = require('../controllers/home.controller')
 
 router.get('/', controller.showItems);
 
+
 router.post('/', checkInput.checkHomepageInput, controller.postItem);
 
 router.get('/:postId', controller.findItems);

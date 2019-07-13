@@ -11,7 +11,8 @@ mongoose.connect(
 
 
 const postRoute = require('./routes/post.route');
-const homeRoute = require('./routes/home.router');
+const homeRoute = require('./routes/home.route');
+const exportRoute = require('./routes/export.route');
 
 app.use(express.urlencoded({
     extended: true
@@ -28,5 +29,7 @@ app.use(express.static("public"));
 app.use('/post', postRoute);
 
 app.use('/', homeRoute);
+
+app.use('/export', exportRoute);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

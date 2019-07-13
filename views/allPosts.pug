@@ -11,13 +11,14 @@ html(lang='en')
     // navbar
     nav.navbar.navbar-expand-lg.fixed-top
       img(src='/image/logo2.png' width='60', height='60') 
-      a.navbar-brand(href='/') SẮT THÉP KIM ĐỒNG
+      a.navbar-brand(href='/') 
+        p.light-font SẮT THÉP 
+        p.bold-font KIM ĐỒNG
       ul
-        li
+        li.donhang
           a(href='/post')
             | ĐƠN HÀNG
-            span.sr-only (current)
-          a LIÊN HỆ
+          a(href='#') LIÊN HỆ
    
     // Bắt đầu nội dung App
     .container
@@ -39,8 +40,8 @@ html(lang='en')
           table#table1
             thead.thead-dark
             tr
-                th Chọn đơn hàng
-                th(scope='col') Tên khách hàng
+                th.chondonhang Chọn đơn hàng
+                th.tenkhachhang(scope='col') Tên khách hàng
                 th(scope='col') Loại thép
                 th(scope='col') Số lượng
                 th(scope='col') Đơn giá
@@ -50,7 +51,7 @@ html(lang='en')
             if matchedItems
                 tr
                   td
-                  td=matchedItems.customer
+                  td.tenkhachhang=matchedItems.customer
                   td=matchedItems.loaithep
                   td=matchedItems.soluong
                   td=matchedItems.dongia
@@ -61,11 +62,10 @@ html(lang='en')
             tr
               td.totalPrice(colspan='5') Cộng tiền hàng
               td(colspan='2')
-                div
+                div=matchedItems.thanhtien
         // Dữ liệu tính toán
       if matchedItems  
         form#luu-du-lieu(action='/post/update/' + matchedItems._id method="POST")
-            button(type="submit" class="btn btn-primary mr-2") Lưu lại đơn hàng
             
             #khachhang
               label(for='customer') Khách hàng:
@@ -73,7 +73,8 @@ html(lang='en')
               hr
             div#Nutxuly
               a.btn.btn-primary.mr-2(href='#table2', onclick='tinhtien()', data-toggle="tooltip" data-placement="top" title="Tính giá trị cho các mục Khối lượng, Đơn giá, Thành tiền và Phôi") Tính tiền
-              a.btn.btn-danger.mr-2(href='#table1', onclick='deleteItems()', data-toggle="tooltip" data-placement="top" title="Xóa một đơn hàng có sẵn trong database") Xóa đơn hàng
+              button(type="submit" class="btn btn-primary mr-2") Lưu lại đơn hàng
+              
             table#table2
                 tbody
                     tr

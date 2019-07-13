@@ -13,20 +13,18 @@ html(lang='en')
       a(href='/')
         img(src='/image/logo2.png' width='60', height='60') 
       a.navbar-brand(href='/') 
-        span.light-font SẮT THÉP 
-        span.bold-font KIM ĐỒNG
+        p.light-font SẮT THÉP 
+        p.bold-font KIM ĐỒNG
       ul
-        li
-          a(href='/post')
-            | ĐƠN HÀNG
-            span.sr-only (current)
-          a LIÊN HỆ
+        li.donhang
+          a(href='/post') ĐƠN HÀNG
+          a(href='#') LIÊN HỆ
     .jumbotron
-      img(src='./image/logo2.png', alt='logo here', width='300p')
-      h1.display-4 Công ty TNHH Thép Kim Đồng
-      p.lead Kinh doanh: Thép tấm, Thép lá, Thép hình UIV, Cắt - Chấn - Cuốn ống,
-      p Địa chỉ: i18A, Kp5, P.Tân Hiệp, BH-ĐN
-      hr.my-4
+      div.content 
+        h1.display-4 Công ty TNHH Sắt Thép Kim Đồng
+        p Kinh doanh: Thép tấm, Thép lá, Thép hình UIV, Cắt - Chấn - Cuốn ống,
+        p Địa chỉ: i18A, Kp5, P.Tân Hiệp, BH-ĐN
+        hr.my-4
     // Bắt đầu nội dung App
     .container
       h1#header BẢNG BÁO GIÁ
@@ -50,21 +48,21 @@ html(lang='en')
           table#table1
             thead.thead-dark
             tr
-                th Chọn đơn hàng
-                th(scope='col') Tên khách hàng
+                th.chondonhang Chọn đơn hàng
+                th.tenkhachhang(scope='col') Tên khách hàng
                 th(scope='col') Loại thép
                 th(scope='col') Số lượng
                 th(scope='col') Đơn giá
                 th(scope='col') Thành tiền
                 th(scope='col') Phôi
-                th(scope='col' colspan='2') Ghi chú
+                th.ghichu(scope='col' colspan='2') Ghi chú
             div#searchResult
                  
               if posts  
                 each post in posts
                   tr(class='tenKhachHang')
-                    td
-                    td(class='customer')=post.customer
+                    td.chondonhang
+                    td(class='customer tenkhachhang')=post.customer
                     td=post.loaithep
                     td=post.soluong
                     td=post.dongia
@@ -78,14 +76,14 @@ html(lang='en')
                 if totalPrice
                   td.totalPrice(colspan='5') Cộng tiền hàng
                   td(colspan='2')
-                    div= totalPrice
+                    div.tongtien= totalPrice
         // Dữ liệu tính toán
         
         form#luu-du-lieu(action="/" method="POST")
             
             #khachhang
               label(for='customer') Khách hàng:
-              input#customer(type='text', name='customer', placeholder='Nhập tên khách hàng' autofocus value=values ? values.customer : "")
+              input#customer(type='text', name='customer', placeholder='Nhập tên khách hàng' value=values ? values.customer : "")
               hr
             div#Nutxuly
               a.btn.btn-primary.mr-2(href='#table2', onclick='tinhtien()', data-toggle="tooltip" data-placement="top" title="Tính giá trị cho các mục Khối lượng, Đơn giá, Thành tiền và Phôi") Tính tiền

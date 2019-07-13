@@ -11,26 +11,18 @@ html(lang='en')
     // navbar
     nav.navbar.navbar-expand-lg.fixed-top
       img(src='/image/logo2.png' width='60', height='60') 
-      a.navbar-brand(href='/') SẮT THÉP KIM ĐỒNG
+      a.navbar-brand(href='/') 
+        p.light-font SẮT THÉP 
+        p.bold-font KIM ĐỒNG
       ul
         li
           a(href='/post')
             | ĐƠN HÀNG
-            span.sr-only (current)
-          a LIÊN HỆ
-    .jumbotron
-      img(src='./image/logo2.png', alt='logo here', width='300p')
-      h1.display-4 Công ty TNHH Thép Kim Đồng
-      p.lead Kinh doanh: Thép tấm, Thép lá, Thép hình UIV, Cắt - Chấn - Cuốn ống,
-      p Địa chỉ: i18A, Kp5, P.Tân Hiệp, BH-ĐN
-      hr.my-4
+          a(href='#') LIÊN HỆ
+    
     // Bắt đầu nội dung App
     .container
-      h1#header BẢNG BÁO GIÁ
-      hr
-      if errors
-          each error in errors
-            .alert.alert-danger= error
+      
     #bangtinh
       #dulieu
         
@@ -80,7 +72,7 @@ html(lang='en')
             
             #khachhang
               label(for='customer') Khách hàng:
-              input#customer(type='text', name='customer', placeholder='Nhập tên khách hàng' autofocus value=values ? values.customer : "")
+              input#customer(type='text', name='customer', placeholder='Nhập tên khách hàng' value=values ? values.customer : "")
               hr
             div#Nutxuly
               button(type="submit" class="btn btn-primary mr-2") Lưu đơn hàng mới
