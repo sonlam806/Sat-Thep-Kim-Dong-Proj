@@ -1,6 +1,6 @@
 const Donhang = require("../models/donhang.model");
 const moment = require("moment");
-
+const puppeteer = require('puppeteer');
 
 module.exports.getPdfItems = async (req, res) => {
   try {
@@ -31,3 +31,19 @@ module.exports.getPdfItems = async (req, res) => {
     res.render('export');
   }
 }
+
+module.exports.download = async (req, res) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('http://localhost:3000/export/showPDF', {
+    waitUntil: 'networkidle2'
+  });
+  await page.pdf({
+    path: 'donhang.pdf',
+    format: 'A4'
+  });
+
+  await browser.close();
+  res.redirect('/');
+
+};
