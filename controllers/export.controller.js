@@ -12,7 +12,9 @@ module.exports.getPdfItems = async (req, res) => {
       }
     });
     let customerName = posts[0].customer;
-    let renderTime = moment().format('L');
+    let postDate = posts[0].date.getDate();
+    let postMonth = posts[0].date.getMonth();
+    let postYear = posts[0].date.getFullYear();
     let totalPrice = 0;
     for (let i = 0; i < posts.length; i++) {
       totalPrice += posts[i].thanhtien;
@@ -20,12 +22,12 @@ module.exports.getPdfItems = async (req, res) => {
     res.render('export', {
       posts: posts,
       customerName: customerName,
-      renderTime: renderTime,
+      postDate: postDate,
+      postMonth: postMonth,
+      postYear: postYear,
       totalPrice: totalPrice
     });
   } catch (err) {
-    res.json({
-      message: err
-    });
+    res.render('export');
   }
 }

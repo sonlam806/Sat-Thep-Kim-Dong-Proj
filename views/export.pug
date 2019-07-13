@@ -14,25 +14,27 @@ html(lang='en')
         p thép kim đồng
       .company-info
         div.company-name
-          span công ty tnhh 
-          span.big-name sắt thép kim đồng
-        .contact
+          span công ty tnhh sắt thép kim đồng
+        .company-contact
           p ĐT: 0123456789
-          p ĐC: Địa chỉ: i18A, Kp5, P.Tân Hiệp, BH-ĐN
+          p Địa chỉ: i18A, Kp5, P.Tân Hiệp, BH-ĐN
           h2 Kinh doanh: Thép tấm, Thép lá, Thép hình UIV, Cắt - Chấn - Cuốn ống
     hr.line
     .bill
       .bill-tilte
         h2 hóa đơn bán hàng
       .bill-contact
-          span Đơn vị mua hàng:
-          span=customerName 
-          span.dotted-line
-          span.noi-giao-hang Nơi giao hàng:
-          span.dotted-line 
-          span.dai-dien-mua-hang Đại diện nhận hàng:
-          span.dotted-line
-      .bill-content
+          .contact
+            span Đơn vị mua hàng: 
+            span=customerName 
+            span.dotted-line
+          .contact
+            span.noi-giao-hang Nơi giao hàng: 
+            span.dotted-line 
+          .contact
+            span.dai-dien-mua-hang Đại diện nhận hàng: 
+            span.dotted-line
+    .bill-content
         table
           tr
             th STT
@@ -41,14 +43,15 @@ html(lang='en')
             th Số lượng
             th Đơn giá
             th Thành tiền
-          each post in posts
-            tr
-              td=post.stt
-              td=post.loaithep
-              td=post.donvi
-              td=post.soluong
-              td=post.dongia
-              td=post.thanhtien
+          if posts
+            each post in posts
+              tr
+                td=post.stt
+                td=post.loaithep
+                td=post.donvi
+                td=post.soluong
+                td=post.dongia
+                td=post.thanhtien
           tr
             td(colspan='2') TỔNG CỘNG
             td
@@ -73,9 +76,12 @@ html(lang='en')
           p.kyten (Ký, ghi họ tên)
       .sign-col-2
         .first-line
-          span Ngày .....
-          span tháng ...... 
-          span năm 20......
+          span Ngày 
+          span=postDate
+          span tháng 
+          span=postMonth
+          span năm 
+          span=postYear
         #kyten
           p.bold-text Người bán hàng
-          p.kyten (Kí, ghi họ tên)
+          p.kyten (Ký, ghi họ tên)
