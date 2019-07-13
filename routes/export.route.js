@@ -4,14 +4,14 @@ const puppeteer = require('puppeteer');
 
 
 
-router.get('/pdf', async (req, res) => {
+router.get('/download', async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto('http://localhost:3000/', {
+  await page.goto('http://localhost:3000/export/showPDF', {
     waitUntil: 'networkidle2'
   });
   await page.pdf({
-    path: 'hn.pdf',
+    path: 'donhang.pdf',
     format: 'A4'
   });
 

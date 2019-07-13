@@ -2,6 +2,7 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-size: 12px;
 }
 
 body {
@@ -12,7 +13,7 @@ body {
 
 .header {
   display: flex;
-  width: 60%;
+  width: 80%;
   margin: 0 auto;
   margin-top: 300px;
   justify-content: center;
@@ -45,21 +46,26 @@ body {
 
 .company-name {
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
 .big-name {
-  font-size: 2rem;
+  font-size: 1.3rem;
 }
 
 .line {
-  width: 60%;
+  width: 80%;
   margin: 0 auto;
 }
 
+.contact p {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 .bill {
-  width: 60%;
+  width: 80%;
   margin: 30px auto;
   display: flex;
   flex-direction: column;
@@ -89,9 +95,54 @@ table {
   margin: 0 auto;
 }
 
-table,
-th,
-td {
+table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
+  text-align: center;
+}
+
+.note {
+  display: flex;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.sign {
+  display: flex;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.sign-col-1 {
+  flex: 1;
+  padding: 0 30px;
+}
+
+.sign-col-1 span {
+  margin: 10px 10px;
+}
+
+.sign-col-1 i {
+  font-size: 30px;
+}
+
+.sign-col-1 p {
+  padding: 5px 100px;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.sign-col-2 {
+  flex: 1;
+  padding: 0 30px;
+}
+
+.sign-col-2 span {
+  margin: 10px 10px;
+}
+
+.sign-col-2 p {
+  padding: 5px 100px;
 }
