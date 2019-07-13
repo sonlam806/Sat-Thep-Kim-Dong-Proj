@@ -4,13 +4,17 @@ const puppeteer = require('puppeteer');
 
 module.exports.getPdfItems = async (req, res) => {
   try {
+    let searchInput = req.query.export.toLowerCase();
     const today = moment().startOf('day');
-    let posts = await Donhang.find({
+    let allPosts = await Donhang.find({
       date: {
         $gte: today.toDate(),
         $lte: moment(today).endOf('day').toDate()
       }
     });
+    let posts = allPosts.filter(function (item) {
+      return item.customer.toLowerCase().indexOf(searchInput) !== -1;
+    })
     let customerName = posts[0].customer;
     let postDate = posts[0].date.getDate();
     let postMonth = posts[0].date.getMonth();
@@ -19,6 +23,7 @@ module.exports.getPdfItems = async (req, res) => {
     for (let i = 0; i < posts.length; i++) {
       totalPrice += posts[i].thanhtien;
     }
+
     res.render('export', {
       posts: posts,
       customerName: customerName,

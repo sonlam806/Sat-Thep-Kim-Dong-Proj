@@ -26,7 +26,7 @@ html(lang='en')
       .bill-contact
           .contact
             span Đơn vị mua hàng: 
-            span=customerName 
+            span(style='font-weight:bold')=customerName 
             span.dotted-line
           .contact
             span.noi-giao-hang Nơi giao hàng: 
@@ -44,24 +44,24 @@ html(lang='en')
             th Đơn giá
             th Thành tiền
           if posts
-            each post in posts
+            each post, index in posts
               tr
-                td=post.stt
+                td=index + 1
                 td=post.loaithep
                 td=post.donvi
                 td=post.soluong
-                td=post.dongia
-                td=post.thanhtien
-          tr
+                td=post.dongia.toLocaleString()
+                td=post.thanhtien.toLocaleString()
+          tr#tongtien
             td(colspan='2') TỔNG CỘNG
             td
             td
             td
-            td=totalPrice
+            td=totalPrice.toLocaleString()
            
     .note
       p Ghi chú: 
-      span.dotted-line
+      p.dotted-line
     .sign
       .sign-col-1
         .first-line

@@ -117,8 +117,7 @@ table {
 }
 
 table,
-th,
-td {
+th {
   border: 1px solid black;
   border-collapse: collapse;
   text-align: center;
@@ -130,16 +129,33 @@ td {
   font-size: 0.75rem;
 }
 
+td {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px dotted black;
+}
+
+#tongtien {
+  border: 1px solid black;
+}
+
 .note {
   display: flex;
   width: 90%;
-  margin: 0 auto;
+  margin: 0px auto;
+  margin-bottom: 20px;
 }
 
 .note p {
   margin-top: 20px;
-  padding: 0px 50px;
+  width: 115px;
+  padding-left: 50px;
   font-size: 1rem;
+}
+
+.note .dotted-line {
+  border-bottom: 1px dotted black;
+  width: 550px;
 }
 
 .sign {
