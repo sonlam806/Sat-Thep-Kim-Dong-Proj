@@ -3,13 +3,12 @@ const moment = require("moment");
 
 module.exports.showItems = async (req, res) => {
   try {
-    const today = moment().startOf('day');
+    const today = moment().format('DD MM YYYY');
+
     let allPosts = await Donhang.find({
-      date: {
-        $gte: today.toDate(),
-        $lte: moment(today).endOf('day').toDate()
-      }
+      date: today
     });
+
     let time = new Date;
     let presentDate = time.getDate();
     let presentMonth = time.getMonth();
@@ -78,14 +77,12 @@ module.exports.postItem = async (req, res) => {
       // You do not need to check if i is larger than splitStr length, as your for does that for you
       // Assign it back to the array
       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-
     }
     // Directly return the joined string
-
     return splitStr.join(' ');
   }
   let customerInput = titleCase(req.body.customer);
-
+  let postDate = moment().format('DD MM YYYY');
   const post = new Donhang({
     customer: customerInput,
     loaithep: req.body.loaithep,
@@ -100,7 +97,8 @@ module.exports.postItem = async (req, res) => {
     giacong: req.body.giacong,
     soluong: req.body.soluong,
     thanhtien: req.body.thanhtien,
-    phoi: req.body.phoi
+    phoi: req.body.phoi,
+    date: postDate
   });
   try {
     const savedPost = await post.save();

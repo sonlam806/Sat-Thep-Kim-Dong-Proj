@@ -58,8 +58,7 @@ const Donhang = new mongoose.Schema({
         default: 0
     },
     date: {
-        type: Date,
-        default: new Date
+        type: String
     }
 });
 
