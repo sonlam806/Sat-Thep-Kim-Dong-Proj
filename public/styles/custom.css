@@ -1,9 +1,14 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
 * {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+}
+
+body {
+    background-color: whitesmoke;
+    font-family: 'Montserrat', sans-serif;
 }
 
 nav {
@@ -64,10 +69,6 @@ nav>ul>li>a:hover {
     transition: 400ms;
 }
 
-body {
-    background-color: whitesmoke;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
 .jumbotron {
     width: 80%;
@@ -216,6 +217,7 @@ table {
 #table2 {
     display: flex;
     width: 80vw;
+    height: 60vh;
     justify-content: center;
     align-items: center;
 }
@@ -228,6 +230,7 @@ table {
 #table2 th {
     width: 250px;
     padding: 5px;
+    font-size: 1.2rem;
     text-align: center;
     font-weight: 500;
     background-color: rgb(60, 179, 113);
@@ -243,6 +246,7 @@ table {
     font-weight: 500;
     color: white;
     border: none;
+
 }
 
 #table2 tr:last-child {

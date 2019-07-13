@@ -20,7 +20,8 @@ html(lang='en')
           a(href='/post') ĐƠN HÀNG
           a(href='#') LIÊN HỆ
     .jumbotron
-      div.content 
+      div.content
+        //- img(src='./image/pic1.jpg' width='90%') 
         h1.display-4 Công ty TNHH Sắt Thép Kim Đồng
         p Kinh doanh: Thép tấm, Thép lá, Thép hình UIV, Cắt - Chấn - Cuốn ống,
         p Địa chỉ: i18A, Kp5, P.Tân Hiệp, BH-ĐN
@@ -42,8 +43,15 @@ html(lang='en')
               
         #dataSaved.container(width='100%')
           div
-            span Ngày lập đơn hàng: 
-            span=renderTime
+            a(href='/export/showPDF' class='btn btn-success mb-2') In hóa đơn 
+          div(class='d-flex')
+            h6 Ngày lập đơn hàng: 
+            h6(class='ml-2 mr-2')=presentDate
+            span /
+            h6(class='ml-2 mr-2')=presentMonth
+            span /
+            h6(class='ml-2 mr-2')=presentYear
+
         
           table#table1
             thead.thead-dark

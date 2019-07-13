@@ -10,14 +10,19 @@ module.exports.showItems = async (req, res) => {
         $lte: moment(today).endOf('day').toDate()
       }
     });
-    let renderTime = moment().format('L');
+    let time = new Date;
+    let presentDate = time.getDate();
+    let presentMonth = time.getMonth();
+    let presentYear = time.getFullYear();
     let totalPrice = 0;
     for (let i = 0; i < allPosts.length; i++) {
       totalPrice += allPosts[i].thanhtien;
     }
     res.render('index', {
       posts: allPosts,
-      renderTime: renderTime,
+      presentDate: presentDate,
+      presentMonth: ++presentMonth,
+      presentYear: presentYear,
       totalPrice: totalPrice
     });
   } catch (err) {
