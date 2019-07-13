@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const puppeteer = require('puppeteer');
-
+const controller = require('../controllers/export.controller');
 
 
 router.get('/download', async (req, res) => {
@@ -20,9 +20,7 @@ router.get('/download', async (req, res) => {
 
 });
 
-router.get('/showPDF', (req, res) => {
-  res.render('export');
-})
+router.get('/showPDF', controller.getPdfItems)
 
 
 module.exports = router;

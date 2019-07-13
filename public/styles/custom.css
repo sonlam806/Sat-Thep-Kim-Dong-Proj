@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+
 * {
     margin: 0px;
     padding: 0px;
@@ -138,15 +139,15 @@ body {
 #khachhang input {
     border: none;
     outline: none;
+    width: 500px;
     margin-left: 5px;
     padding: 0px 5px;
-    border-bottom: 1px solid #666;
 }
 
 #khachhang input[type=text]:focus {
     border-bottom: 2px solid rgb(60, 179, 113);
     transition: 500ms;
-    width: 500px;
+    width: 600px;
 }
 
 #customer {
@@ -160,7 +161,8 @@ table {
     border: none;
 }
 
-#table1 th, #table1 td {
+#table1 th,
+#table1 td {
     border: none;
 }
 
@@ -218,7 +220,8 @@ table {
     align-items: center;
 }
 
-#table2 th, #table2 td {
+#table2 th,
+#table2 td {
     border: none;
 }
 
@@ -284,6 +287,7 @@ form {
     nav {
         width: 100%;
     }
+
     .jumbotron {
         width: 100%;
     }
@@ -293,22 +297,26 @@ form {
     nav {
         width: 100%;
     }
+
     .jumbotron {
         width: 100%;
         height: 40vh;
     }
+
     .jumbotron>.content {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
+
     .display-4 {
         margin: 150px 0px 0px 0px;
         color: white;
         font-weight: 500;
         font-size: 2.5rem;
     }
+
     .jumbotron p {
         margin: 20px 0px 0px 0px;
         font-size: 1.3rem;
