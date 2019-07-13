@@ -3,7 +3,9 @@ const Donhang = require('../models/donhang.model');
 module.exports.showItems = async (req, res) => {
     try {
         let totalPrice = 0;
+
         const posts = await Donhang.find();
+
         for (let i = 0; i < posts.length; i++) {
             totalPrice = totalPrice + posts[i].thanhtien;
         }

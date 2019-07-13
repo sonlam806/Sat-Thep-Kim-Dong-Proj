@@ -54,15 +54,15 @@ html(lang='en')
                   td.tenkhachhang=matchedItems.customer
                   td=matchedItems.loaithep
                   td=matchedItems.soluong
-                  td=matchedItems.dongia
-                  td=matchedItems.thanhtien
+                  td=matchedItems.dongia.toLocaleString()
+                  td=matchedItems.thanhtien.toLocaleString()
                   td=matchedItems.phoi
                   td
                     
             tr
               td.totalPrice(colspan='5') Cộng tiền hàng
               td(colspan='2')
-                div=matchedItems.thanhtien
+                div=matchedItems.thanhtien.toLocaleString()
         // Dữ liệu tính toán
       if matchedItems  
         form#luu-du-lieu(action='/post/update/' + matchedItems._id method="POST")

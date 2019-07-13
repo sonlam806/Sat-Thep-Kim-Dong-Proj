@@ -5,7 +5,7 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(http-equiv='X-UA-Compatible', content='ie=edge')
     link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
-    link(rel='stylesheet', href='./styles/custom.css')
+    link(rel='stylesheet', href='./styles/posts.css')
     title Steel Project
   body
     // navbar
@@ -24,12 +24,13 @@ html(lang='en')
     .container
       
     #bangtinh
+      h2.header TẤT CẢ ĐƠN HÀNG
       #dulieu
         
         .container
           form.form-group(action='/post/search', method='GET')
             .form-group.mx-sm-3.mb-2
-              input#searchInput.form-control(onkeyup='searchItem()', onkeychange='searchItem()' name="q" type='text', placeholder='Tìm kiếm đơn hàng theo tên khách hàng')
+              input#searchInput.form-control(style='width:400px' onkeyup='searchItem()', onkeychange='searchItem()' name="q" type='text', placeholder='Tìm kiếm đơn hàng theo tên khách hàng')
               
         #dataSaved.container(width='100%')
          
@@ -37,7 +38,7 @@ html(lang='en')
           table#table1
             thead.thead-dark
             tr
-                th Chọn đơn hàng
+                th Ngày lập hóa đơn
                 th(scope='col') Tên khách hàng
                 th(scope='col') Loại thép
                 th(scope='col') Số lượng
@@ -50,12 +51,12 @@ html(lang='en')
               if posts  
                 each post in posts
                   tr(class='tenKhachHang')
-                    td
+                    td=post.date
                     td(class='customer')=post.customer
                     td=post.loaithep
                     td=post.soluong
-                    td=post.dongia
-                    td=post.thanhtien
+                    td=post.dongia.toLocaleString()
+                    td=post.thanhtien.toLocaleString()
                     td=post.phoi
                     td
                       a(class="btn btn-info" href= '/post/' + post._id) Sửa đơn hàng
@@ -65,7 +66,7 @@ html(lang='en')
                 if totalPrice
                   td.totalPrice(colspan='5') Cộng tiền hàng
                   td(colspan='2')
-                    div= totalPrice
+                    div= totalPrice.toLocaleString()
         // Dữ liệu tính toán
         
         form#luu-du-lieu(action="/post" method="POST")

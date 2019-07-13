@@ -46,7 +46,7 @@ html(lang='en')
             form.form-group(action='/export/showPDF', method='GET')
               .form-group.mx-sm-3.mb-2.d-flex
                 input.form-control(type='text' name='export' placeholder='Nhập tên khách hàng cần in hóa đơn' style='width:350px') 
-                button(type='submit' class='btn btn-success ml-2') In hóa đơn 
+                button(type='submit' target='_blank' class='btn btn-success ml-2') In hóa đơn 
           div(class='d-flex' style='color:red')
             h6 Ngày lập đơn hàng: 
             h6(class='ml-2 mr-2')=presentDate
@@ -76,8 +76,8 @@ html(lang='en')
                     td(class='customer tenkhachhang' style='width:1500px')=post.customer
                     td=post.loaithep
                     td=post.soluong
-                    td=post.dongia
-                    td=post.thanhtien
+                    td=post.dongia.toLocaleString()
+                    td=post.thanhtien.toLocaleString()
                     td=post.phoi
                     td
                       a(class="btn btn-info" href= '/' + post._id) Sửa đơn hàng
@@ -87,7 +87,7 @@ html(lang='en')
                 if totalPrice
                   td.totalPrice(colspan='5') Cộng tiền hàng
                   td(colspan='2')
-                    div.tongtien= totalPrice
+                    div.tongtien= totalPrice.toLocaleString()
         // Dữ liệu tính toán
         
         form#luu-du-lieu(action="/" method="POST")
