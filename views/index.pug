@@ -4,164 +4,134 @@ html(lang='en')
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(http-equiv='X-UA-Compatible', content='ie=edge')
-    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
-    link(rel='stylesheet', href='./styles/custom.css')
+    link(rel='stylesheet', href='./styles/homepage.css')
     title Steel Project
   body
-    // navbar
-    nav.navbar.navbar-expand-lg.fixed-top
-      a(href='/')
-        img(src='/image/logo2.png' width='60', height='60') 
-      a.navbar-brand(href='/') 
-        p.light-font SẮT THÉP 
-        p.bold-font KIM ĐỒNG
-      ul
+    // Navbar
+    nav.navbar.fixed-top
+      .left-brand
+        a(href='/')
+          img(src='/image/logo2.png' width='60', height='60')
+        a(href='/') Thép kim đồng
+      ul.right-brand
         li.donhang
-          a(href='/post') ĐƠN HÀNG
-          a(href='#') LIÊN HỆ
-    .jumbotron
-      div.content
-        //- img(src='./image/pic1.jpg' width='90%') 
-        h1.display-4 Công ty TNHH Sắt Thép Kim Đồng
-        p Kinh doanh: Thép tấm, Thép lá, Thép hình UIV, Cắt - Chấn - Cuốn ống,
-        p Địa chỉ: i18A, Kp5, P.Tân Hiệp, BH-ĐN
-        hr.my-4
-    // Bắt đầu nội dung App
+          a(href='/post') dữ liệu
+    // end of navbar
+    // header
     .container
-      h1#header BẢNG BÁO GIÁ
-      hr
-      if errors
-          each error in errors
-            .alert.alert-danger= error
-    #bangtinh
-      #dulieu
-        
-        .container
-          form.form-group(action='/post/search', method='GET')
-            .form-group.mx-sm-3.mb-2
-              input#searchInput.form-control(onkeyup='searchItem()', onkeychange='searchItem()' name="q" type='text', placeholder='Tìm kiếm đơn hàng theo tên khách hàng')
-              
-        #dataSaved.container(width='100%')
-          div(class='mb-4')
-            form.form-group(action='/export/showPDF', method='GET')
-              .form-group.mx-sm-3.mb-2.d-flex
-                input.form-control(type='text' name='export' placeholder='Nhập tên khách hàng cần in hóa đơn' style='width:350px') 
-                button(type='submit' target='_blank' class='btn btn-success ml-2') In hóa đơn 
-          div(class='d-flex' style='color:red')
-            h6 Ngày lập đơn hàng: 
-            h6(class='ml-2 mr-2')=presentDate
-            span /
-            h6(class='ml-2 mr-2')=presentMonth
-            span /
-            h6(class='ml-2 mr-2')=presentYear
-
-        
-          table#table1
-            thead.thead-dark
-            tr
-                th.chondonhang Chọn đơn hàng
-                th.tenkhachhang(scope='col') Tên khách hàng
-                th(scope='col') Loại thép
-                th(scope='col') Số lượng
-                th(scope='col') Đơn giá
-                th(scope='col') Thành tiền
-                th(scope='col') Phôi
-                th.ghichu(scope='col' colspan='2') Ghi chú
-            div#searchResult
-                 
-              if posts  
-                each post in posts
-                  tr(class='tenKhachHang')
-                    td.chondonhang
-                    td(class='customer tenkhachhang' style='width:1500px')=post.customer
-                    td=post.loaithep
-                    td=post.soluong
-                    td=post.dongia.toLocaleString()
-                    td=post.thanhtien.toLocaleString()
-                    td=post.phoi
-                    td
-                      a(class="btn btn-info" href= '/' + post._id) Sửa đơn hàng
-                    td
-                      a(class="btn btn-danger" href= 'delete/' + post._id) Xóa đơn hàng
+      // left-side
+      .print-show
+        .header
+          .logo
+            img(src='/image/logo2.png' width='60', height='60')
+            p thep kim dong
+          .company
+            p.company-name công ty tnhh thép kim ĐỒNG
+            .company-business
+              p.business Kinh doanh:
+              .business-content
+                p thép tấm, thép lá, thép hình u - i - v
+                p cắt - chấn - cuốn ống
+                p cắt lazer cnc - gia công cơ khí
+        .address
+          p Đ/c: A26c, KP.5, P.Tân Hiệp, Biên Hòa - DĐ: 0913.814.268 - 0913.731.989 - 0902.997.128
+        .main-content
+          .title
+            p phiếu giao hàng
+            .title-info
+              p Ngày
+              p Mã số đơn hàng
+          .customer
+            .customer-info
+              p.customer-name Khách hàng
+              p.customer-phone Điện thoại
+          .products
+            table
               tr
-                if totalPrice
-                  td.totalPrice(colspan='5') Cộng tiền hàng
-                  td(colspan='2')
-                    div.tongtien= totalPrice.toLocaleString()
-        // Dữ liệu tính toán
+                th STT
+                th 
+                  span Loại hàng
+                  span (đơn vị: mm)
+                th  Đơn vị tính
+                th  Số lượng
+                th  Đơn giá
+                th  Thành tiền
+              tr
+                td 1
+                td  
+                td  
+                td  
+                td  
+                td
+              tr
+                td(colspan='5')   Tổng
+                td
+          .products-delivery
+            .delivery-date
+              p Ngày giao
+              input(type='text')
+            .debt
+              p Công nợ
+        .technical-notice
+          p Dung sai độ dày 5%, trọng lượng tính theo barem.
+        .sign
+          .sign-receiver
+            p Người nhận
+          .sign-deliver
+            p Người lập phiếu
+      // right-side
+      .input-fields
+        .bill-order
         
-        form#luu-du-lieu(action="/" method="POST")
-            
-            #khachhang
-              label(for='customer') Khách hàng:
-              input#customer(type='text', name='customer', placeholder='Nhập tên khách hàng' value=values ? values.customer : "")
-              hr
-            div#Nutxuly
-              a.btn.btn-primary.mr-2(href='#table2', onclick='tinhtien()', data-toggle="tooltip" data-placement="top" title="Tính giá trị cho các mục Khối lượng, Đơn giá, Thành tiền và Phôi") Tính tiền
-              button(type="submit" class="btn btn-primary mr-2") Lưu đơn hàng mới
-              
-            table#table2
-                tbody
-                    tr
-                        th Loại thép
-                        td
-                            select#select(name='loaithep' value=values ? values.loaithep : 'option')
-                                option(value='option') Select 1 option below
-                                option(value='C') Loại C
-                                option(value='L') Loại L
-                                option(value='Tấm') Tấm
-                                option(value='Vít') Vít
-                                option(value='Ống') Ống
-                                option(value='Z, U') Z, U
-                                option(value='Tròn') Tròn
-                                option(value='Vành') Vành
-                    tr
-                    th Cánh 2
-                    td
-                        input#canh2(type='text', placeholder='Cánh 2', name="canh2" value=values? values.canh2 : '') 
-                    tr
-                    th Cánh 1
-                    td
-                        input#canh1(type='text', placeholder='Cánh 1', name="canh1" value=values? values.canh1 : '')
-                    tr
-                    th Bụng, FI
-                    td
-                        input#bung(type='text', placeholder='Bụng, FI', name="bung" value=values? values.bung : '')
-                    tr
-                    th Cao
-                    td
-                        input#cao(type='text', placeholder='Cao', name="cao" value=values? values.cao : '')
-                    tr
-                    th Dài
-                    td
-                        input#dai(type='text', placeholder='Dài', name="dai" value=values? values.dai : '')
-                    tr
-                    th Dày
-                    td
-                        input#day(type='text', placeholder='Dày', name='day' value=values? values.day : '')
-                    tr
-                    th Gia công
-                    td
-                        input#giacong(type='text', placeholder='Cắt, Chấn, Ống, Vít', name="giacong" value=values? values.giacong : '')
-                    tr
-                    th Số lượng
-                    td
-                        input#soluong(type='text', placeholder='Số lượng', name="soluong" value=values? values.soluong : '')
-                    tr
-                    th Khối lượng
-                    td
-                        input#khoiluong(type='text', placeholder='Khối lượng', readonly='', name="khoiluong" value=values? values.khoiluong : '')
-                    tr
-                    th Đơn giá
-                    td
-                        input#dongia(type='text', placeholder='Đơn giá', readonly='', name="dongia" value=values? values.dongia : '')
-                    tr
-                    th Thành tiền
-                    td
-                        input#thanhtien(type='text', placeholder='Thành tiền', readonly='', name="thanhtien" value=values? values.thanhtien : '')
-                    tr
-                    th Phôi
-                    td
-                        input#phoi(type='text', placeholder='Phôi', readonly='', name="phoi" value=values? values.phoi : '')
+        .species
+          .select
+          .input
+          .specific-img
+            img(src='' alt='image here')
+        .thick
+          p Độ dày
+          input(type='text')
+        .parameters
+          p Thông Số
+          p Dòng này phụ thuộc vào select
+        .length
+          p Dài
+          input(type='text')
+        .mass
+          p Khối lượng
+          p Result
+        .amount
+          p Số lượng
+          input(type='text')
+        .unit-price
+          table
+            tr
+              th(colspan='6') Đơn giá
+            tr
+              th Thép
+              th Chấn
+              th Cuốn
+              th Đột lỗ
+              th CNC
+              th Công
+            tr
+              td 
+                input(type='text')
+              td 
+                input(type='text')
+              td 
+                input(type='text')
+              td 
+                input(type='text')
+              td 
+                input(type='text')
+              td 
+                input(type='text')
+        .gia-cong
+          p Gia công
+          button Đã xong
+        
+    // end of header      
+
     
     script(src='js/main.js')

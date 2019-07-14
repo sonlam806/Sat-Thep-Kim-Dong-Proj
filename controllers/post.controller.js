@@ -3,11 +3,15 @@ const Donhang = require("../models/donhang.model");
 module.exports.showItems = async (req, res) => {
   let totalPrice = 0;
   let postTime = [];
-  const posts = await Donhang.find();
-  for (let i = 0; i < posts.length; i++) {
-    postTime.push(posts[i].date);
-  }
-
+  const allPosts = await Donhang.find({
+    username: "shindo"
+  });
+  let postDocs = allPosts[0]._doc;
+  // for (let i = 0; i < allPosts.length; i++) {
+  //   return (posts = allPosts[0].donhang.date);
+  // }
+  let postDocsDate = postDocs.donhang.date;
+  console.log(postDocsDate);
   try {
     for (let i = 0; i < posts.length; i++) {
       totalPrice = totalPrice + posts[i].thanhtien;
