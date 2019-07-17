@@ -8,6 +8,8 @@ router.get('/', controller.showItems);
 
 router.post('/', checkInput.checkInput, controller.postItem);
 
+router.get('/test/:id', controller.addItem);
+
 router.get('/:postId', controller.findItems);
 
 // Search items

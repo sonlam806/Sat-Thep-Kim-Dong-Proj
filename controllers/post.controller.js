@@ -3,15 +3,19 @@ const Donhang = require("../models/donhang.model");
 module.exports.showItems = async (req, res) => {
   let totalPrice = 0;
   let postTime = [];
-  const allPosts = await Donhang.find({
-    username: "shindo"
-  });
-  let postDocs = allPosts[0]._doc;
-  // for (let i = 0; i < allPosts.length; i++) {
-  //   return (posts = allPosts[0].donhang.date);
-  // }
-  let postDocsDate = postDocs.donhang.date;
-  console.log(postDocsDate);
+  let postDocs = [];
+
+  // Get all posts from database
+  const allPosts = await Donhang.find();
+  // Get document from every post in databse
+  for (let i = 0; i < allPosts.length; i++) {
+    postDocs.push(allPosts[i]._doc);
+  };
+  for (let i = 0; i < postDocs.length; i++) {
+
+  }
+  let postDocsDate = postDocs.donhang.date; // Get current post date
+
   try {
     for (let i = 0; i < posts.length; i++) {
       totalPrice = totalPrice + posts[i].thanhtien;
@@ -131,3 +135,24 @@ module.exports.deleteItem = async (req, res) => {
     });
   }
 };
+
+// Test update post end point
+module.exports.addItem = async (req, res) => {
+  try {
+
+    const updatedPost = await Donhang.update({
+      _id: req.params.id
+    }, {
+      $set: {
+        bung: req.body.bung
+      }
+    });
+    const allPosts = await Donhang.find();
+
+    res.json(updatedPost);
+  } catch (err) {
+    res.json({
+      message: err
+    });
+  }
+}
