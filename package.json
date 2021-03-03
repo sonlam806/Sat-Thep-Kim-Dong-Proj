@@ -16,7 +16,7 @@
     "moment": "^2.24.0",
     "mongodb": "^3.2.7",
     "mongoose": "^5.6.3",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "puppeteer": "^1.18.1"
   },
   "devDependencies": {
